@@ -34,3 +34,4 @@ Use the required disclaimer verbatim in any video opening and end card:
 > CONCEPTUAL SIMULATION — For technical presentation only. Equipment
 > configuration, detection performance and operating response are subject to
 > detailed engineering, controlled tests and site approval.
+# Mi-guard
