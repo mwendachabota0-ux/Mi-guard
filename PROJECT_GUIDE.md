@@ -15,7 +15,9 @@ readings and records are made-up examples for explaining an idea.
 The example journey is:
 
 **A truck passes an example sensing area → sample readings are shown → a
-person reviews the example → the review is saved as a sample record.**
+person reviews the example → the review is saved as a sample record.** In the
+simulation, a Case B example flag takes an alternate visual route; this is not a
+real dispatch or equipment command.
 
 ## What is ready now
 
@@ -23,7 +25,7 @@ person reviews the example → the review is saved as a sample record.**
 |---|---|---|
 | Project board | A checklist that breaks the work into steps and leaves space to assign people. | Ready |
 | Six handover folders | Empty, labeled folders for the final video and supporting files. | Ready |
-| Records dashboard | A screen for trying out sample events and example operator choices. | Ready to explore |
+| HEATGUARD dashboard | A truck-flow simulation with sample events, route outcomes, and example operator choices. | Ready for review |
 | Signal generator | A program that draws made-up sensor readings for four example situations. | Ready; sample chart and data file generated |
 
 The dashboard saves changes in the browser where you use it. Those changes are
@@ -31,26 +33,33 @@ not shared with other team members or saved to a central system.
 
 ## How to try the dashboard
 
-1. Open **Pilot Records Dashboard** in the project preview.
-2. Choose **Simulate a pass** to add a made-up example.
-3. Select a record to see its sample details.
-4. Try **Hold / Inspect**, **Clear**, or **Escalate** to see how an example
+1. Open **HEATGUARD** in the project preview.
+2. Choose **Simulate a pass** and select a case to add a made-up truck pass.
+3. Case B shows an illustrative event flag and takes the alternate route in the
+   simulation. Case A continues toward the crusher; Cases C and D remain marked
+   for review and are not treated as confirmed detections.
+4. Select a record to see its sample details and saved simulated route outcome.
+5. Try **Hold / Inspect**, **Clear**, or **Escalate** to see how an example
    response is recorded.
-5. Search or filter the records. Use **JSON** or **CSV** to download sample
+6. Search or filter the records. Use **JSON** or **CSV** to download sample
    records if needed.
 
-These buttons only change the demonstration. They do not send instructions to a
-mine, truck, sensor, or operator.
+The truck movement and alternate route are visual simulation only. These
+controls do not send instructions to a mine, truck, sensor, dispatch system, or
+operator.
 
 ## The four examples
 
 - **A — Normal pass:** The made-up readings show no event indicated.
-- **B — Example flag:** The made-up readings show an event flag for a person to
-  review.
+- **B — Example flag:** The made-up readings show an illustrative event flag.
+  In the simulation only, that pass is shown taking the alternate route before
+  the crusher.
 - **C — Unclear reading:** The made-up readings could have other explanations,
-  so the example asks for review rather than claiming a definite result.
+  so the example asks for review rather than claiming a definite result or
+  automatically diverting the load.
 - **D — Repeated examples:** Several made-up runs are shown together. They do
-  not prove that a real system would behave consistently.
+  not prove that a real system would behave consistently; they remain review
+  examples in the simulation.
 
 Every chart and dashboard record is labeled as synthetic. The numbers are not
 measurements from the mine.
@@ -109,6 +118,8 @@ project board lists the remaining work.
 ## Important limits
 
 - No real sensors or site measurements are connected to this project.
+- The alternate route is a visual demonstration only; it does not control
+  trucks, dispatch, equipment, sensors, or operator actions.
 - The demonstration does not prove detection accuracy, distance, or reliability.
 - It does not identify the shape of an object or automatically stop equipment.
 - Any real filming, testing, or operating response needs supervisor direction

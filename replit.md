@@ -1,10 +1,10 @@
-# Hybrid Metal Detection & Record Management System
+# HEATGUARD
 
-Conceptual Q4 2026 pilot assets for a mine-stakeholder technical presentation, including an illustrative event-record dashboard and synthetic signal examples.
+Conceptual Q4 2026 pilot assets for a mine-stakeholder technical presentation, including a simulation-only haul-truck dashboard and synthetic signal examples.
 
 ## Run & Operate
 
-- Open the **Pilot Records Dashboard** artifact preview to review the browser-based prototype.
+- Open the **HEATGUARD** artifact preview to review the browser-based prototype.
 - `uv run python wp2_signal_generator.py` — generate the Case A–D PNG and CSV under `generated-artifacts/wp2-signal-plots/`.
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
@@ -23,6 +23,7 @@ Conceptual Q4 2026 pilot assets for a mine-stakeholder technical presentation, i
 - `01_Final_Video/` through `06_Final_Review_Pack/` — handover folder scaffolds
 - `wp2_signal_generator.py` — deterministic, labeled synthetic signal generator
 - `artifacts/pilot-dashboard/` — event dashboard prototype
+- `artifacts/heatguard/` — primary simulation dashboard
 
 ## Architecture decisions
 
@@ -32,7 +33,7 @@ Conceptual Q4 2026 pilot assets for a mine-stakeholder technical presentation, i
 
 ## Product
 
-The dashboard demonstrates a conceptual path from a simulated sensor event through operator review and a searchable example record. It supports sample-case review, operator-action updates, and JSON/CSV export.
+HEATGUARD demonstrates synthetic truck passes by a proposed scanner point, an alternate route for Case B event flags in the simulation, and a searchable example record. It supports sample-case review, operator-action updates, and JSON/CSV export.
 
 ## User preferences
 
@@ -41,6 +42,7 @@ The dashboard demonstrates a conceptual path from a simulated sensor event throu
 ## Gotchas
 
 - All waveforms, event records, alert states, and displayed values are synthetic. Do not claim validated detection performance, detection range, target outlines, thresholds, or automatic mine-control shutdown.
+- The alternate route is a visual simulation only; it does not control trucks, dispatch, equipment, sensors, or operators.
 - The required opening/end-card disclaimer must remain verbatim in the video.
 - Site filming, testing, and operating response require supervisor direction and Barrick HSE approval.
 

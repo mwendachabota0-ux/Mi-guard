@@ -1,5 +1,5 @@
 kind = "web"
-previewPath = "/"
+previewPath = "/pilot-dashboard/"
 title = "Pilot Records Dashboard"
 description = "An interactive, illustrative dashboard for reviewing synthetic metal-detection pilot events, operator actions, and evaluation evidence."
 version = "1.0.0"
@@ -8,7 +8,7 @@ router = "path"
 
 [[services]]
 name = "web"
-paths = [ "/" ]
+paths = [ "/pilot-dashboard/" ]
 localPort = 25875
 
 [services.development]
@@ -25,4 +25,4 @@ to = "/index.html"
 
 [services.env]
 PORT = "25875"
-BASE_PATH = "/"
+BASE_PATH = "/pilot-dashboard/"
