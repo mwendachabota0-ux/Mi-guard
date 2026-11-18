@@ -1,0 +1,44 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "-N0eR5-OJw3WsEGlJfJDZ"
+uri = "file://generated-artifacts/wp2-signal-plots/signal-cases-A-D.png"
+type = "image"
+title = "Illustrative signal scenarios A–D"
+description = "Synthetic EMI and magnetic/gradiometric trace examples for workflow discussion. Not site measurements or performance evidence."
+logical_id = "afce58ec-0b73-4a18-80a6-94774fcb3ecb"
+content_hash = "sha256:48f3f44617b60df8fd857222ae3247f4530b5b824e0d621075ef1dbbb55886ba"
+size = 1381745
+mtime_ms = 1794999631793
+storage_uri = "gcs://replit-rams-assets-riker/rams/assets/repl:d90417c6-1b8f-4c2f-a5bc-85239895bbe9/afce58ec-0b73-4a18-80a6-94774fcb3ecb/b1a755c2-4a1b-4490-8278-0ea533542db7"
+storage_version_token = "1794999709669519"
+content_type = "image/png"
+
+[[outputs]]
+id = "XSOI9nEVtAJ-T_Wz3jCBi"
+uri = "file://generated-artifacts/wp2-signal-plots/signal-cases-A-D.csv"
+type = "table"
+title = "Synthetic signal samples A–D"
+description = "Reproducible sample waveform values for the four illustrative cases; every row is labeled synthetic and not site measurements."
+logical_id = "405cc523-18c0-407e-a061-3ca6e562212b"
+content_hash = "sha256:abb795f790b5e7b36996edcbd6fba55fa982812349502f5c9b4f57fe823e5e7e"
+size = 410062
+mtime_ms = 1794999631829
+storage_uri = "gcs://replit-rams-assets-riker/rams/assets/repl:d90417c6-1b8f-4c2f-a5bc-85239895bbe9/405cc523-18c0-407e-a061-3ca6e562212b/bb98db37-e14f-4663-a4a9-510a6afb4a18"
+storage_version_token = "1794999710309827"
+content_type = "text/csv"
+
+[[outputs]]
+id = "lkbp5rPXhDF8Y3wW5-yE8"
+uri = "file://PROJECT_GUIDE.md"
+type = "text"
+title = "Plain-language project guide"
+description = "A simple start-to-finish explanation of the pilot, what is ready, what remains, and the project's safety limits."
+logical_id = "6257bbba-5f1d-4efc-982d-5e71b4ff31d5"
+content_hash = "sha256:8f119061c2dac2438e7e2634798050f003eb4c5ac7f3cb2db2b6594dff9ce7f9"
+size = 6182
+mtime_ms = 1794999955605
+storage_uri = "gcs://replit-rams-assets-riker/rams/assets/repl:d90417c6-1b8f-4c2f-a5bc-85239895bbe9/6257bbba-5f1d-4efc-982d-5e71b4ff31d5/510574d9-b52f-4ad1-8a92-9c38d08ae7de"
+storage_version_token = "1794999967664559"
+content_type = "text/markdown"
