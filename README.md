@@ -1,5 +1,8 @@
 # Hybrid Metal Detection & Record Management System
 
+New to the project? Start with the plain-language
+[project guide](PROJECT_GUIDE.md).
+
 Q4 2026 conceptual pilot assets for technical review. This project contains an
 interactive event-record prototype, a synthetic signal plotting script, a
 24-hour work board, and folders for the six handover items.

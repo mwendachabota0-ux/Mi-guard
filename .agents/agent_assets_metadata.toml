@@ -28,3 +28,17 @@ mtime_ms = 1794999631829
 storage_uri = "gcs://replit-rams-assets-riker/rams/assets/repl:d90417c6-1b8f-4c2f-a5bc-85239895bbe9/405cc523-18c0-407e-a061-3ca6e562212b/bb98db37-e14f-4663-a4a9-510a6afb4a18"
 storage_version_token = "1794999710309827"
 content_type = "text/csv"
+
+[[outputs]]
+id = "lkbp5rPXhDF8Y3wW5-yE8"
+uri = "file://PROJECT_GUIDE.md"
+type = "text"
+title = "Plain-language project guide"
+description = "A simple start-to-finish explanation of the pilot, what is ready, what remains, and the project's safety limits."
+logical_id = "6257bbba-5f1d-4efc-982d-5e71b4ff31d5"
+content_hash = "sha256:8f119061c2dac2438e7e2634798050f003eb4c5ac7f3cb2db2b6594dff9ce7f9"
+size = 6182
+mtime_ms = 1794999955605
+storage_uri = "gcs://replit-rams-assets-riker/rams/assets/repl:d90417c6-1b8f-4c2f-a5bc-85239895bbe9/6257bbba-5f1d-4efc-982d-5e71b4ff31d5/510574d9-b52f-4ad1-8a92-9c38d08ae7de"
+storage_version_token = "1794999967664559"
+content_type = "text/markdown"
