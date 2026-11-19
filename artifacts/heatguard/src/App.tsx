@@ -5,10 +5,11 @@ import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import NotFound from '@/pages/not-found';
 import Scenario from '@/pages/Scenario';
+import SignalBehaviour from '@/pages/SignalBehaviour';
 import {
   Activity, Archive, ArrowDownToLine, ArrowRight, ArrowUpRight, Check, ChevronDown,
   CircleHelp, ClipboardCheck, FilePlus2, Filter, GitBranch, Gauge, Search, ShieldAlert,
-  Truck, X, Factory, Route as RouteIcon,
+  Truck, X, Factory, Route as RouteIcon, Waves,
 } from 'lucide-react';
 import { Link, Route, Switch, useLocation, Router as WouterRouter } from 'wouter';
 
@@ -195,6 +196,7 @@ function Home() {
       <div className="side-label">WORKSPACE</div>
        <Link href="/" className="side-active" data-testid="link-pass-review"><span className="side-indicator"/><Activity size={16}/> Pass review <span className="side-count">{records.length}</span></Link>
        <Link href="/scenario" className="side-link scenario-nav" data-testid="link-scenario"><RouteIcon size={16}/> Scenario layout <ArrowUpRight size={13}/></Link>
+       <Link href="/signals" className="side-link scenario-nav" data-testid="link-signal-behaviour"><Waves size={16}/> Signal behaviour <ArrowUpRight size={13}/></Link>
       <div className="side-label">REFERENCE</div>
       <div className="side-link"><ClipboardCheck size={16}/> Evaluation checklist</div>
       <div className="side-link"><Archive size={16}/> Pass history</div>
@@ -205,11 +207,12 @@ function Home() {
     <section className="main-area">
       <header className="topbar">
         <div className="crumb">HEATGUARD <span>/</span> <b>Pass review</b></div>
-         <div className="top-right"><span className="synthetic-pill"><i/> SYNTHETIC MODE</span><Link href="/scenario" className="scenario-top-link" data-testid="link-top-scenario">Scenario layout <ArrowUpRight size={14}/></Link><button className="icon-button" title="About this prototype" aria-label="About this prototype" onClick={()=>document.getElementById('disclaimer')?.scrollIntoView({behavior:'smooth'})} data-testid="button-about"><CircleHelp size={17}/></button></div>
+          <div className="top-right"><span className="synthetic-pill"><i/> SYNTHETIC MODE</span><Link href="/scenario" className="scenario-top-link" data-testid="link-top-scenario">Scenario layout <ArrowUpRight size={14}/></Link><Link href="/signals" className="scenario-top-link" data-testid="link-top-signals">Signal behaviour <Waves size={14}/></Link><button className="icon-button" title="About this prototype" aria-label="About this prototype" onClick={()=>document.getElementById('disclaimer')?.scrollIntoView({behavior:'smooth'})} data-testid="button-about"><CircleHelp size={17}/></button></div>
       </header>
       <nav className="mobile-workspace-nav" aria-label="Workspace pages">
         <Link href="/" className="mobile-workspace-active" data-testid="link-mobile-pass-review"><Activity size={14}/>Pass review</Link>
         <Link href="/scenario" data-testid="link-mobile-scenario"><RouteIcon size={14}/>Scenario layout</Link>
+        <Link href="/signals" data-testid="link-mobile-signals"><Waves size={14}/>Signal behaviour</Link>
       </nav>
       <div className="content">
         <div className="page-heading fade-in">
@@ -284,7 +287,7 @@ function Home() {
 }
 
 function Router() {
-  return <RoutedErrorBoundary><Switch><Route path="/" component={Home}/><Route path="/scenario" component={Scenario}/><Route component={NotFound}/></Switch></RoutedErrorBoundary>;
+  return <RoutedErrorBoundary><Switch><Route path="/" component={Home}/><Route path="/scenario" component={Scenario}/><Route path="/signals" component={SignalBehaviour}/><Route component={NotFound}/></Switch></RoutedErrorBoundary>;
 }
 
 function RoutedErrorBoundary({ children }: { children: ReactNode }) {

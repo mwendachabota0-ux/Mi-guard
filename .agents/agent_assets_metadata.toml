@@ -6,13 +6,13 @@ id = "-N0eR5-OJw3WsEGlJfJDZ"
 uri = "file://generated-artifacts/wp2-signal-plots/signal-cases-A-D.png"
 type = "image"
 title = "WP2 synthetic cases A–D"
-description = "A 1920×1080 overview of all four illustrative EMI and magnetic / gradiometric cases."
+description = "High-resolution, labeled overview of all four illustrative signal cases."
 logical_id = "afce58ec-0b73-4a18-80a6-94774fcb3ecb"
 content_hash = "sha256:d95ff472016df6336c43e19f0d80cc9650d70c21c45d8cee6f65b3845d29f696"
 size = 525206
-mtime_ms = 1795088350706
-storage_uri = "gcs://replit-rams-assets-janeway/rams/assets/repl:267120bf-7549-4b0a-990d-8b3d9efcc658/afce58ec-0b73-4a18-80a6-94774fcb3ecb/90e0aaf0-53f3-4f59-84d5-5d82152c40ce"
-storage_version_token = "1795088421078639"
+mtime_ms = 1795090489835
+storage_uri = "gcs://replit-rams-assets-picard/rams/assets/repl:f52d0d16-c94b-43e9-8e0d-7bf038e33f66/afce58ec-0b73-4a18-80a6-94774fcb3ecb/1902b5a4-1700-4010-ae79-243aabbf4fac"
+storage_version_token = "1795090753167159"
 content_type = "image/png"
 
 [[outputs]]
@@ -20,13 +20,13 @@ id = "XSOI9nEVtAJ-T_Wz3jCBi"
 uri = "file://generated-artifacts/wp2-signal-plots/signal-cases-A-D.csv"
 type = "table"
 title = "WP2 labeled sample CSV"
-description = "4,800 synthetic sample rows across Cases A–D, with explicit labels and relative units."
+description = "4,800 synthetic rows across Cases A–D, labeled as illustrative relative-unit data."
 logical_id = "405cc523-18c0-407e-a061-3ca6e562212b"
 content_hash = "sha256:5f62d6a7f3f7f98d8bcf2535dddc52aca5c6b6e2143e3893df9d1f60a700c5fd"
 size = 663305
-mtime_ms = 1795088356266
-storage_uri = "gcs://replit-rams-assets-janeway/rams/assets/repl:267120bf-7549-4b0a-990d-8b3d9efcc658/405cc523-18c0-407e-a061-3ca6e562212b/bcd827c0-0858-4345-92b4-6cadb653fa4f"
-storage_version_token = "1795088423804065"
+mtime_ms = 1795090495967
+storage_uri = "gcs://replit-rams-assets-picard/rams/assets/repl:f52d0d16-c94b-43e9-8e0d-7bf038e33f66/405cc523-18c0-407e-a061-3ca6e562212b/b618a65c-4687-4a2c-9aa6-9a7c6dfe7490"
+storage_version_token = "1795090753688662"
 content_type = "text/csv"
 
 [[outputs]]
@@ -62,13 +62,13 @@ id = "Bp4C30gvNLRxlDCSRQu9M"
 uri = "file://generated-artifacts/wp2-signal-plots/signal-conditioning-flow.png"
 type = "image"
 title = "WP2 signal-flow diagram"
-description = "Conceptual channel-to-operator-review flow; unspecified inputs and methods remain placeholders."
+description = "Conceptual flow from example channels to operator review; unspecified methods remain placeholders."
 logical_id = "f880d8a1-6473-4e8e-a3f4-2d3bd82a4668"
 content_hash = "sha256:a504aa418d85dcebc97781822fa6357966882d3d50c402feb5233dc6ef537e89"
 size = 105267
-mtime_ms = 1795088358670
-storage_uri = "gcs://replit-rams-assets-janeway/rams/assets/repl:267120bf-7549-4b0a-990d-8b3d9efcc658/f880d8a1-6473-4e8e-a3f4-2d3bd82a4668/9249bfd4-e4ae-44e4-925e-cf24260b9274"
-storage_version_token = "1795088421719636"
+mtime_ms = 1795090498611
+storage_uri = "gcs://replit-rams-assets-picard/rams/assets/repl:f52d0d16-c94b-43e9-8e0d-7bf038e33f66/f880d8a1-6473-4e8e-a3f4-2d3bd82a4668/b4e0c485-33fc-45e1-8af5-999a280c1f68"
+storage_version_token = "1795090754173326"
 content_type = "image/png"
 
 [[outputs]]
@@ -126,3 +126,17 @@ mtime_ms = 1795088356230
 storage_uri = "gcs://replit-rams-assets-janeway/rams/assets/repl:267120bf-7549-4b0a-990d-8b3d9efcc658/623d88b1-018e-4b44-9421-ba7ce52fd4a5/970eee7f-ce9d-45cb-8085-5f032a5dab14"
 storage_version_token = "1795088423429594"
 content_type = "image/png"
+
+[[outputs]]
+id = "Cyn5I2jRPwPWXUs1uTU1g"
+uri = "file://generated-artifacts/wp2-signal-plots/signal-conditioning-animation.svg"
+type = "image"
+title = "WP2 animated signal flow"
+description = "Self-contained animated SVG of the conceptual signal path; the motion is not sensor behavior or a control process."
+logical_id = "a1a82f6e-ba89-47c8-9363-6a8c9c5f0a51"
+content_hash = "sha256:741735846541e7520378b025cf7e2d278ca7fe45d49b0f99d944588205eec18a"
+size = 8179
+mtime_ms = 1795090498615
+storage_uri = "gcs://replit-rams-assets-picard/rams/assets/repl:f52d0d16-c94b-43e9-8e0d-7bf038e33f66/a1a82f6e-ba89-47c8-9363-6a8c9c5f0a51/6b5f9888-da45-4fff-898d-51f49bb06468"
+storage_version_token = "1795090754704191"
+content_type = "image/svg+xml"

@@ -14,5 +14,6 @@ measured evidence.
 ## WP2 signal behaviour
 
 See `WP2_Signal_Behaviour.md` for the exact synthetic recipe, signal-flow
-interpretation, case meanings, and limits. These examples are presentation
-material only; they do not model a physical sensor or establish performance.
+interpretation, case meanings, and limits. A static diagram and animated SVG
+illustrate the same conceptual channel-to-review path. These are presentation
+materials only; they do not model a physical sensor or establish performance.

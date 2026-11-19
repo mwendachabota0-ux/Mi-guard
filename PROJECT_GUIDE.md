@@ -26,14 +26,15 @@ real dispatch or equipment command.
 | Project board | A checklist that breaks the work into steps and leaves space to assign people. | Ready |
 | Six handover folders | Empty, labeled folders for the final video and supporting files. | Ready |
 | HEATGUARD dashboard | A truck-flow simulation with sample events, route outcomes, and example operator choices. | Ready for review |
-| Signal generator | A program that draws made-up sensor readings for four example situations. | Ready for review; labeled chart, case overlays, signal-flow visual, and sample data generated |
+| Signal generator | A program that draws made-up sensor readings for four example situations. | Ready for review; labeled charts, case overlays, static and animated signal-flow visuals, sample data, and assumptions generated |
 
 The dashboard saves changes in the browser where you use it. Those changes are
 not shared with other team members or saved to a central system.
 
 ## How to try the dashboard
 
-1. Open **HEATGUARD** in the project preview.
+1. Open **HEATGUARD** in the project preview. Choose **Signal behaviour** to
+   inspect the WP2 flow and four illustrative cases.
 2. Choose **Simulate a pass** and select a case to add a made-up truck pass.
 3. Case B shows an illustrative event flag and takes the alternate route in the
    simulation. Case A continues toward the crusher; Cases C and D remain marked
@@ -79,8 +80,9 @@ example sensors could sit, and how the process moves toward the crusher.
 
 ### 3. Make example readings — WP2, ready for review
 
-Create made-up signal charts for Cases A–D. These help explain the idea; they
-cannot establish whether a real system detects metal.
+Create made-up signal charts and a conceptual animated signal path for Cases
+A–D. These help explain the idea; they cannot establish whether a real system
+detects metal.
 
 ### 4. Show how records might work — WP3, prototype ready
 

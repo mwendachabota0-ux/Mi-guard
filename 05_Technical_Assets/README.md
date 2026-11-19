@@ -11,7 +11,8 @@ the WP2 assets under the ignored `generated-artifacts/wp2-signal-plots/`
 directory:
 
 - A 1920×1080 overview of Cases A–D and four 1920×1080 case overlays.
-- A 1920×1080 signal-conditioning flow image and an editable SVG version.
+- A 1920×1080 signal-conditioning flow image, an editable static SVG, and a
+  self-contained animated SVG showing the conceptual signal path.
 - A labeled sample CSV and a JSON manifest of the seed and synthetic settings.
 
 Review outputs before copying them into the final handoff package. Keep the

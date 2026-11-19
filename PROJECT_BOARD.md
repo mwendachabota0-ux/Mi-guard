@@ -5,6 +5,10 @@
 **Owner convention:** Replace each `Unassigned` placeholder with a team member.  
 **Status:** All tasks begin unchecked. Check a task only after its handoff is reviewed.
 
+**WP2 handoff:** Case A–D plots and sample data, signal-flow diagram, animated
+signal-flow SVG, and reproducible source are implemented. Technical review is
+still pending, so WP2 checkboxes remain open until the handoff is reviewed.
+
 ## Hours 0–2 — Scope and schema freeze
 
 - [ ] **WP1 · Owner: Unassigned** — Lock the conceptual site schematic, proposed sensor zone, vehicle paths, equipment locations, and five-stage system flow.

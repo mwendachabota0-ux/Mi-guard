@@ -577,6 +577,105 @@ def save_signal_flow(svg_path: Path, png_path: Path) -> None:
     plt.close(fig)
 
 
+def save_signal_flow_animation(output_path: Path) -> None:
+    """Write a self-contained animated SVG of the conceptual WP2 signal path."""
+    output_path.write_text(
+        """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title description">
+  <title id="title">WP2 conceptual signal behaviour animation</title>
+  <desc id="description">Illustrative EMI and magnetic or gradiometric example channels, plus an unspecified complementary input, move through conceptual data acquisition, generic conditioning, illustrative comparison, and operator review. No sensor implementation or performance is represented.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5 0 10z" fill="#829087"/></marker>
+    <style>
+      text { font-family: Arial, Helvetica, sans-serif; fill: #26383c; }
+      .mono { font-family: "Courier New", monospace; letter-spacing: 1.2px; }
+      .node { fill: #fbfaf6; stroke: #819084; stroke-width: 3; }
+      .path { fill: none; stroke: #87938a; stroke-width: 3; marker-end: url(#arrow); }
+      .moving { filter: drop-shadow(0 0 5px currentColor); }
+      @media (prefers-reduced-motion: reduce) {
+        .moving { display: none; }
+      }
+    </style>
+  </defs>
+  <rect width="1600" height="900" fill="#f5f2e9"/>
+  <text x="58" y="62" font-size="22" font-weight="700" class="mono">WP2 · SENSOR &amp; SIGNAL BEHAVIOUR</text>
+  <text x="58" y="96" font-size="17" fill="#68756d">Conceptual signal flow · not an implementation or validated process</text>
+  <rect x="58" y="120" width="1484" height="54" rx="8" fill="#f8ecd5" stroke="#d5be91" stroke-width="2"/>
+  <text x="80" y="154" font-size="16" font-weight="700" fill="#7d5c25">ILLUSTRATIVE SYNTHETIC DATA — NOT SITE MEASUREMENTS</text>
+  <text x="1520" y="154" text-anchor="end" font-size="13" fill="#775f36">No performance claims</text>
+
+  <rect x="58" y="245" width="270" height="288" rx="12" fill="#fbfaf6" stroke="#8d9a90" stroke-width="3"/>
+  <text x="82" y="282" font-size="14" font-weight="700" class="mono">01 · HYBRID CHANNELS</text>
+  <rect x="78" y="308" width="230" height="55" rx="7" fill="#fff8f1" stroke="#d67539" stroke-width="2"/>
+  <text x="94" y="333" font-size="16" font-weight="700" fill="#a65225">EMI</text>
+  <text x="94" y="352" font-size="12" fill="#715c4a">synthetic example trace</text>
+  <rect x="78" y="377" width="230" height="65" rx="7" fill="#f1f8fb" stroke="#2678a8" stroke-width="2"/>
+  <text x="94" y="402" font-size="14" font-weight="700" fill="#236c92">MAGNETIC / GRADIOMETRIC</text>
+  <text x="94" y="424" font-size="12" fill="#587180">synthetic example trace</text>
+  <rect x="78" y="456" width="230" height="55" rx="7" fill="#f0efe9" stroke="#8d948c" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="94" y="480" font-size="14" font-weight="700" fill="#646d66">COMPLEMENTARY INPUT</text>
+  <text x="94" y="499" font-size="11" fill="#6e746e">type unspecified · no values</text>
+
+  <rect class="node" x="380" y="309" width="220" height="164" rx="12"/>
+  <text x="490" y="356" text-anchor="middle" font-size="15" font-weight="700" class="mono">02</text>
+  <text x="490" y="389" text-anchor="middle" font-size="20" font-weight="700">Data acquisition</text>
+  <text x="490" y="423" text-anchor="middle" font-size="13" fill="#68756d">conceptual stage</text>
+  <rect class="node" x="670" y="309" width="220" height="164" rx="12"/>
+  <text x="780" y="356" text-anchor="middle" font-size="15" font-weight="700" class="mono">03</text>
+  <text x="780" y="388" text-anchor="middle" font-size="18" font-weight="700">Generic signal</text>
+  <text x="780" y="412" text-anchor="middle" font-size="18" font-weight="700">conditioning</text>
+  <text x="780" y="444" text-anchor="middle" font-size="12" fill="#68756d">method unspecified</text>
+  <rect class="node" x="960" y="309" width="245" height="164" rx="12" stroke="#b98334"/>
+  <text x="1082" y="356" text-anchor="middle" font-size="15" font-weight="700" class="mono">04</text>
+  <text x="1082" y="388" text-anchor="middle" font-size="18" font-weight="700">Illustrative comparison</text>
+  <text x="1082" y="417" text-anchor="middle" font-size="14" fill="#775f36">example event flag</text>
+  <text x="1082" y="445" text-anchor="middle" font-size="12" fill="#68756d">no threshold or algorithm</text>
+  <rect class="node" x="1275" y="309" width="245" height="164" rx="12" stroke="#627e6e"/>
+  <text x="1397" y="356" text-anchor="middle" font-size="15" font-weight="700" class="mono">05</text>
+  <text x="1397" y="390" text-anchor="middle" font-size="19" font-weight="700">Operator review</text>
+  <text x="1397" y="423" text-anchor="middle" font-size="13" fill="#68756d">site-approved procedures</text>
+
+  <path id="link-emi" class="path" d="M308 335 C340 335 347 355 380 355"/>
+  <path id="link-mag" class="path" d="M308 408 C340 408 347 387 380 387"/>
+  <path id="link-complementary" class="path" d="M308 483 C340 483 347 421 380 421"/>
+  <path id="link-acquisition-conditioning" class="path" d="M600 391H670"/>
+  <path id="link-conditioning-comparison" class="path" d="M890 391H960"/>
+  <path id="link-comparison-review" class="path" d="M1205 391H1275"/>
+  <circle class="moving" r="7" fill="#d67539"><animateMotion dur="1.4s" repeatCount="indefinite"><mpath href="#link-emi"/></animateMotion></circle>
+  <circle class="moving" r="7" fill="#2678a8"><animateMotion dur="1.6s" repeatCount="indefinite" begin=".35s"><mpath href="#link-mag"/></animateMotion></circle>
+  <circle class="moving" r="6" fill="#8d948c"><animateMotion dur="1.8s" repeatCount="indefinite" begin=".7s"><mpath href="#link-complementary"/></animateMotion></circle>
+  <circle class="moving" r="6" fill="#d67539"><animateMotion dur="1.1s" repeatCount="indefinite" begin=".4s"><mpath href="#link-acquisition-conditioning"/></animateMotion></circle>
+  <circle class="moving" r="6" fill="#2678a8"><animateMotion dur="1.1s" repeatCount="indefinite" begin=".9s"><mpath href="#link-conditioning-comparison"/></animateMotion></circle>
+  <circle class="moving" r="6" fill="#b98334"><animateMotion dur="1.1s" repeatCount="indefinite" begin="1.4s"><mpath href="#link-comparison-review"/></animateMotion></circle>
+
+  <text x="58" y="587" font-size="14" font-weight="700" fill="#65532f">Input type, sample timing, conditioning method, decision logic, and operating response are not specified.</text>
+  <text x="58" y="620" font-size="13" fill="#59675f">Animation shows information flow only; it does not simulate physical sensor behavior or control equipment.</text>
+
+  <text x="58" y="679" font-size="13" font-weight="700" class="mono">FOUR PRESENTATION EXAMPLES</text>
+  <g font-size="13">
+    <rect x="58" y="699" width="350" height="111" rx="9" fill="#eef4ee" stroke="#9db5a5" stroke-width="2"/>
+    <text x="78" y="729" font-weight="700" fill="#4e7564">A · NORMAL PASS</text>
+    <text x="78" y="758">“No Detection Indicated”</text>
+    <text x="78" y="785" font-size="11" fill="#65756a">Illustrative baseline only</text>
+    <rect x="428" y="699" width="350" height="111" rx="9" fill="#f7f0e1" stroke="#d1b475" stroke-width="2"/>
+    <text x="448" y="729" font-weight="700" fill="#9a6923">B · CONCEALED-TARGET EXAMPLE</text>
+    <text x="448" y="758">“Illustrative Event Flag”</text>
+    <text x="448" y="785" font-size="11" fill="#786744">No target outline or location modeled</text>
+    <rect x="798" y="699" width="350" height="111" rx="9" fill="#f7eee9" stroke="#d2aa9b" stroke-width="2"/>
+    <text x="818" y="729" font-weight="700" fill="#a65e47">C · INTERFERENCE / AMBIGUITY</text>
+    <text x="818" y="758">“Requires Validation / Operator Review”</text>
+    <text x="818" y="785" font-size="11" fill="#786c65">No guaranteed classification implied</text>
+    <rect x="1168" y="699" width="374" height="111" rx="9" fill="#edf2f4" stroke="#a7bac4" stroke-width="2"/>
+    <text x="1188" y="729" font-weight="700" fill="#526f85">D · FIVE REPEATED RUNS</text>
+    <text x="1188" y="758">“Physical evaluation required”</text>
+    <text x="1188" y="785" font-size="11" fill="#62717a">Not repeatability evidence</text>
+  </g>
+  <text x="58" y="849" font-size="12" fill="#68756d" class="mono">SYNTHETIC EXAMPLES ONLY · ARBITRARY RELATIVE UNITS · NOT SITE DATA OR VALIDATION EVIDENCE</text>
+</svg>
+""",
+        encoding="utf-8",
+    )
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Generate clearly labeled synthetic EMI and magnetic examples."
@@ -602,15 +701,18 @@ def main() -> None:
     assumptions_path = args.output_dir / "signal-generation-assumptions.json"
     flow_svg_path = args.output_dir / "signal-conditioning-flow.svg"
     flow_png_path = args.output_dir / "signal-conditioning-flow.png"
+    animation_path = args.output_dir / "signal-conditioning-animation.svg"
     save_figure(figure_path, time, scenarios)
     save_case_overlays(args.output_dir, time, scenarios)
     save_csv(csv_path, time, scenarios)
     save_assumptions(assumptions_path, args.seed)
     save_signal_flow(flow_svg_path, flow_png_path)
+    save_signal_flow_animation(animation_path)
     print(f"Generated illustrative figure: {figure_path}")
     print(f"Generated illustrative samples: {csv_path}")
     print(f"Generated video-ready case overlays: {len(scenarios)}")
     print(f"Generated conceptual signal flow: {flow_svg_path} and {flow_png_path}")
+    print(f"Generated animated conceptual signal flow: {animation_path}")
     print(f"Saved synthetic parameter manifest: {assumptions_path}")
     print("No site measurements or validated performance claims are represented.")
 

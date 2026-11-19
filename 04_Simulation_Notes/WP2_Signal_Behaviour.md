@@ -13,6 +13,10 @@ complementary-input placeholder, conceptual data acquisition, generic signal
 conditioning, an illustrative comparison / event flag, and operator review
 under site-approved procedures.
 
+The generated animated SVG visualizes movement between those labeled stages.
+Its moving markers are a presentation effect only; they do not encode sample
+timing, signal processing, decision logic, or an operating response.
+
 The complementary input has no selected type or generated numeric channel.
 Conditioning method, sample timing, comparison logic, thresholds, and operating
 response are not specified. The diagram does not represent an installed

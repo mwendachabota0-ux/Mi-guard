@@ -5,7 +5,7 @@ Conceptual Q4 2026 pilot assets for a mine-stakeholder technical presentation, i
 ## Run & Operate
 
 - Open the **HEATGUARD** artifact preview to review the browser-based prototype.
-- `uv run python wp2_signal_generator.py` — generate the Case A–D PNG and CSV under `generated-artifacts/wp2-signal-plots/`.
+- `uv run python wp2_signal_generator.py` — generate the Case A–D charts, overlays, signal-flow visuals, sample CSV, and assumptions manifest under `generated-artifacts/wp2-signal-plots/`.
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
 - The dashboard stores prototype edits in the current browser's local storage; it is not a shared operational record system.
