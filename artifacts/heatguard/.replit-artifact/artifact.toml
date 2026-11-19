@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "HEATGUARD"
+description = "A simulation-only haul-truck dashboard that illustrates ore loads passing a proposed scanner, diverts flagged example loads along an alternate route, and preserves searchable synthetic event records. It does not control real mine equipment or dispatch."
+version = "1.0.0"
+id = "artifacts/heatguard"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 26124
+
+[services.development]
+run = "pnpm --filter @workspace/heatguard run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/heatguard", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/heatguard/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "26124"
+BASE_PATH = "/"

@@ -1,0 +1,128 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "-N0eR5-OJw3WsEGlJfJDZ"
+uri = "file://generated-artifacts/wp2-signal-plots/signal-cases-A-D.png"
+type = "image"
+title = "WP2 synthetic cases A–D"
+description = "A 1920×1080 overview of all four illustrative EMI and magnetic / gradiometric cases."
+logical_id = "afce58ec-0b73-4a18-80a6-94774fcb3ecb"
+content_hash = "sha256:d95ff472016df6336c43e19f0d80cc9650d70c21c45d8cee6f65b3845d29f696"
+size = 525206
+mtime_ms = 1795088350706
+storage_uri = "gcs://replit-rams-assets-janeway/rams/assets/repl:267120bf-7549-4b0a-990d-8b3d9efcc658/afce58ec-0b73-4a18-80a6-94774fcb3ecb/90e0aaf0-53f3-4f59-84d5-5d82152c40ce"
+storage_version_token = "1795088421078639"
+content_type = "image/png"
+
+[[outputs]]
+id = "XSOI9nEVtAJ-T_Wz3jCBi"
+uri = "file://generated-artifacts/wp2-signal-plots/signal-cases-A-D.csv"
+type = "table"
+title = "WP2 labeled sample CSV"
+description = "4,800 synthetic sample rows across Cases A–D, with explicit labels and relative units."
+logical_id = "405cc523-18c0-407e-a061-3ca6e562212b"
+content_hash = "sha256:5f62d6a7f3f7f98d8bcf2535dddc52aca5c6b6e2143e3893df9d1f60a700c5fd"
+size = 663305
+mtime_ms = 1795088356266
+storage_uri = "gcs://replit-rams-assets-janeway/rams/assets/repl:267120bf-7549-4b0a-990d-8b3d9efcc658/405cc523-18c0-407e-a061-3ca6e562212b/bcd827c0-0858-4345-92b4-6cadb653fa4f"
+storage_version_token = "1795088423804065"
+content_type = "text/csv"
+
+[[outputs]]
+id = "lkbp5rPXhDF8Y3wW5-yE8"
+uri = "file://PROJECT_GUIDE.md"
+type = "text"
+title = "Plain-language project guide"
+description = "A simple start-to-finish explanation of the pilot, what is ready, what remains, and the project's safety limits."
+logical_id = "6257bbba-5f1d-4efc-982d-5e71b4ff31d5"
+content_hash = "sha256:8f119061c2dac2438e7e2634798050f003eb4c5ac7f3cb2db2b6594dff9ce7f9"
+size = 6182
+mtime_ms = 1794999955605
+storage_uri = "gcs://replit-rams-assets-riker/rams/assets/repl:d90417c6-1b8f-4c2f-a5bc-85239895bbe9/6257bbba-5f1d-4efc-982d-5e71b4ff31d5/510574d9-b52f-4ad1-8a92-9c38d08ae7de"
+storage_version_token = "1794999967664559"
+content_type = "text/markdown"
+
+[[outputs]]
+id = "7ozUVhBMLqSq2k7eY4Wev"
+uri = "file://04_Simulation_Notes/WP1_Scenario_System_Layout_Report.md"
+type = "text"
+title = "WP1 Scenario and System Layout Report"
+description = "Markdown report describing the original vehicle-pilot scope, the revised conveyor-based concept, the interactive WP1 page, and remaining validation needs."
+logical_id = "253ba90c-61dd-44c3-83b6-84c98e7391f4"
+content_hash = "sha256:afdcdea4653feec7c32624d275c6b70bf7af560b215bcf978c412c932790a604"
+size = 5416
+mtime_ms = 1795085582922
+storage_uri = "gcs://replit-rams-assets-janeway/rams/assets/repl:62558c67-f5a5-4435-b46e-4028f0128c2c/253ba90c-61dd-44c3-83b6-84c98e7391f4/df859d41-43f3-4e77-af84-5175372adbe3"
+storage_version_token = "1795085602285090"
+content_type = "text/markdown"
+
+[[outputs]]
+id = "Bp4C30gvNLRxlDCSRQu9M"
+uri = "file://generated-artifacts/wp2-signal-plots/signal-conditioning-flow.png"
+type = "image"
+title = "WP2 signal-flow diagram"
+description = "Conceptual channel-to-operator-review flow; unspecified inputs and methods remain placeholders."
+logical_id = "f880d8a1-6473-4e8e-a3f4-2d3bd82a4668"
+content_hash = "sha256:a504aa418d85dcebc97781822fa6357966882d3d50c402feb5233dc6ef537e89"
+size = 105267
+mtime_ms = 1795088358670
+storage_uri = "gcs://replit-rams-assets-janeway/rams/assets/repl:267120bf-7549-4b0a-990d-8b3d9efcc658/f880d8a1-6473-4e8e-a3f4-2d3bd82a4668/9249bfd4-e4ae-44e4-925e-cf24260b9274"
+storage_version_token = "1795088421719636"
+content_type = "image/png"
+
+[[outputs]]
+id = "20zd_lV-_GbAnTVah7RFF"
+uri = "file://generated-artifacts/wp2-signal-plots/case-A-normal-pass-overlay.png"
+type = "image"
+title = "Case A normal-pass overlay"
+description = "Transparent-edge 1920×1080 synthetic baseline example for video editing."
+logical_id = "574a3ba1-63b7-4817-9ef9-de4ad68b1aa2"
+content_hash = "sha256:edd5cc9eaa20e3f087e25e880c150bd1f4cbbdb78036be72a11c9592c9ca158c"
+size = 389627
+mtime_ms = 1795088352102
+storage_uri = "gcs://replit-rams-assets-janeway/rams/assets/repl:267120bf-7549-4b0a-990d-8b3d9efcc658/574a3ba1-63b7-4817-9ef9-de4ad68b1aa2/e4e4ce64-3760-4603-9393-24f1044be89d"
+storage_version_token = "1795088422153050"
+content_type = "image/png"
+
+[[outputs]]
+id = "DLMjOBYjBhnNjClq_KQWI"
+uri = "file://generated-artifacts/wp2-signal-plots/case-B-concealed-target-overlay.png"
+type = "image"
+title = "Case B event-flag overlay"
+description = "Synthetic channel-change example; it does not model or prove physical detection."
+logical_id = "3a52ce6a-a5f3-456d-b257-ca741f12ffb7"
+content_hash = "sha256:5a80eb8d01e4921667c59471e6e0d5df63ba564de58c8259721a69cba636bb90"
+size = 229990
+mtime_ms = 1795088353478
+storage_uri = "gcs://replit-rams-assets-janeway/rams/assets/repl:267120bf-7549-4b0a-990d-8b3d9efcc658/3a52ce6a-a5f3-456d-b257-ca741f12ffb7/dabea67f-7b98-41c8-bf77-102670a969ee"
+storage_version_token = "1795088422645328"
+content_type = "image/png"
+
+[[outputs]]
+id = "c2ZR-w39IaeIurcd__ilG"
+uri = "file://generated-artifacts/wp2-signal-plots/case-C-interference-ambiguity-overlay.png"
+type = "image"
+title = "Case C ambiguity overlay"
+description = "Synthetic interference-like traces labeled for validation and operator review."
+logical_id = "1e484184-7239-4e57-9a95-1bf46981fefa"
+content_hash = "sha256:c33a5cb2ed212848642b09381d30aeba7b497f417e5456a7673dd2823e3057eb"
+size = 308695
+mtime_ms = 1795088354794
+storage_uri = "gcs://replit-rams-assets-janeway/rams/assets/repl:267120bf-7549-4b0a-990d-8b3d9efcc658/1e484184-7239-4e57-9a95-1bf46981fefa/5e7ec5c5-0dda-4f37-a3bc-6eadf1a08420"
+storage_version_token = "1795088423024451"
+content_type = "image/png"
+
+[[outputs]]
+id = "6OUgPqjpmVCPzgQ2vCXPi"
+uri = "file://generated-artifacts/wp2-signal-plots/case-D-repeated-run-overlay.png"
+type = "image"
+title = "Case D repeated-run overlay"
+description = "Five synthetic overlays; not evidence of repeatability or performance."
+logical_id = "623d88b1-018e-4b44-9421-ba7ce52fd4a5"
+content_hash = "sha256:edddb66db3bb50e23c9678ef0cf882eec5e0767694e2609a6a056974213e0f31"
+size = 478847
+mtime_ms = 1795088356230
+storage_uri = "gcs://replit-rams-assets-janeway/rams/assets/repl:267120bf-7549-4b0a-990d-8b3d9efcc658/623d88b1-018e-4b44-9421-ba7ce52fd4a5/970eee7f-ce9d-45cb-8085-5f032a5dab14"
+storage_version_token = "1795088423429594"
+content_type = "image/png"
