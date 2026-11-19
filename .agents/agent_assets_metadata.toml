@@ -42,3 +42,17 @@ mtime_ms = 1794999955605
 storage_uri = "gcs://replit-rams-assets-riker/rams/assets/repl:d90417c6-1b8f-4c2f-a5bc-85239895bbe9/6257bbba-5f1d-4efc-982d-5e71b4ff31d5/510574d9-b52f-4ad1-8a92-9c38d08ae7de"
 storage_version_token = "1794999967664559"
 content_type = "text/markdown"
+
+[[outputs]]
+id = "7ozUVhBMLqSq2k7eY4Wev"
+uri = "file://04_Simulation_Notes/WP1_Scenario_System_Layout_Report.md"
+type = "text"
+title = "WP1 Scenario and System Layout Report"
+description = "Markdown report describing the original vehicle-pilot scope, the revised conveyor-based concept, the interactive WP1 page, and remaining validation needs."
+logical_id = "253ba90c-61dd-44c3-83b6-84c98e7391f4"
+content_hash = "sha256:afdcdea4653feec7c32624d275c6b70bf7af560b215bcf978c412c932790a604"
+size = 5416
+mtime_ms = 1795085582922
+storage_uri = "gcs://replit-rams-assets-janeway/rams/assets/repl:62558c67-f5a5-4435-b46e-4028f0128c2c/253ba90c-61dd-44c3-83b6-84c98e7391f4/df859d41-43f3-4e77-af84-5175372adbe3"
+storage_version_token = "1795085602285090"
+content_type = "text/markdown"
