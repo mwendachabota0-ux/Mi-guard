@@ -296,3 +296,67 @@ button:focus-visible,input:focus-visible,select:focus-visible { outline:2px soli
   .sequence-head { flex-direction:column; }
   .svg-label { font-size:15px; }
 }
+
+/* WP1 conveyor system study */
+.scenario-content .page-heading h1 { color:#2d413d; }
+.diagram-meta { display:flex; align-items:center; gap:10px; margin:0 0 10px; padding:8px 10px; border:1px solid #e7e1d4; border-radius:5px; background:#faf8f1; }
+.diagram-meta .profile-glyph { width:31px; height:29px; color:#668171; }
+.diagram-meta .profile-glyph svg { width:22px; height:22px; }
+.diagram-meta b { display:block; color:#526257; font-size:10px; }
+.diagram-meta small { display:block; margin-top:2px; color:#85897f; font-size:9px; line-height:1.4; }
+.diagram-stamp { margin-left:auto; padding:5px 7px; border:1px solid #d5c9ad; border-radius:3px; color:#806431; background:#f8f2e3; font:8px var(--app-font-mono); letter-spacing:.05em; white-space:nowrap; }
+.conveyor-svg { display:block; width:100%; height:auto; }
+.conveyor-svg.isometric { background:#f1eee3; }
+.conveyor-svg.isometric [data-part="belt"] { filter:drop-shadow(2px 5px 1px #b5b3a5); }
+.conveyor-svg.isometric [data-part="crusher"],.conveyor-svg.isometric [data-part="diverter"] { filter:drop-shadow(2px 4px 1px #c8c2b2); }
+.diagram-part { transition:opacity .2s ease,filter .2s ease; }
+.diagram-part.part-active { filter:drop-shadow(0 0 4px #d7a344); }
+.drawing-frame:has(.part-active) .diagram-part:not(.part-active) { opacity:.73; }
+.svg-label { fill:#485a50; font-weight:600; }
+.svg-sub { fill:#7c847a; }
+.svg-tiny { fill:#736f61; }
+.legend-row .legend-road { border-top:3px solid #64816f; }
+.legend-row .legend-zone { border:1px dashed #ae7928; background:repeating-linear-gradient(135deg,#f4e7c9 0 3px,#d6b775 3px 4px); }
+.legend-row .legend-hold { border:1px solid #a98956; background:#e5d8bd; }
+.walkthrough { margin-top:14px; padding:16px 18px 15px; }
+.walkthrough-top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+.walkthrough h2 { margin:5px 0 0; color:#33433f; font-size:16px; letter-spacing:-.03em; }
+.walkthrough-controls { display:flex; gap:6px; }
+.walkthrough-controls button { display:inline-flex; align-items:center; justify-content:center; gap:6px; min-height:31px; padding:0 10px; border:1px solid #dcd7c9; border-radius:5px; color:#5f7066; background:#fbfaf6; font-size:9px; font-weight:700; cursor:pointer; }
+.walkthrough-controls button:hover:not(:disabled) { border-color:#c29a58; color:#795b26; background:#f5efdf; }
+.walkthrough-controls button:disabled { opacity:.45; cursor:not-allowed; }
+.walkthrough-detail { max-width:850px; margin:9px 0 13px; color:#69766e; font-size:11px; line-height:1.55; }
+.step-track { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:7px; }
+.step-track button { display:flex; align-items:flex-start; gap:7px; min-height:47px; padding:8px 7px; border:1px solid #e5e0d4; border-radius:5px; color:#777e74; background:#faf9f4; text-align:left; cursor:pointer; }
+.step-track button:hover { border-color:#d1bc8f; background:#f6f0e2; }
+.step-track button.step-selected { border-color:#c9aa6c; color:#5d4d2c; background:#f3ecdc; }
+.step-track button>span { display:grid; place-items:center; flex:0 0 19px; width:19px; height:19px; border-radius:50%; color:#7c6a43; background:#e9e1ce; font:8px var(--app-font-mono); }
+.step-track button b { font-size:9px; line-height:1.35; }
+.scenario-caveat { border-left-color:#b98230; }
+.walkthrough button:focus-visible,.profile-select button:focus-visible,.view-switch button:focus-visible { outline:2px solid #c28a2c; outline-offset:2px; }
+@media(max-width:900px) {
+  .step-track { grid-template-columns:repeat(3,minmax(0,1fr)); }
+}
+@media(max-width:760px) {
+  .conveyor-svg { min-width:860px; }
+  .drawing-caption { min-width:860px; }
+  .diagram-pan-hint { display:block; }
+  .diagram-meta { align-items:flex-start; }
+  .diagram-stamp { align-self:center; }
+  .walkthrough { padding:13px 12px; }
+  .walkthrough-top { align-items:flex-start; flex-direction:column; }
+  .walkthrough h2 { font-size:14px; }
+  .walkthrough-detail { font-size:10px; }
+  .step-track { grid-template-columns:1fr 1fr; }
+  .step-track button { min-height:42px; }
+}
+@media(max-width:420px) {
+  .diagram-meta { flex-wrap:wrap; }
+  .diagram-stamp { margin-left:0; }
+  .walkthrough-controls { align-self:stretch; }
+  .walkthrough-controls button { flex:1; }
+  .step-track button b { font-size:8px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .diagram-part { transition:none; }
+}

@@ -1,242 +1,166 @@
 import { useState } from 'react';
 import { Link } from 'wouter';
 import {
-  Activity, AlertTriangle, ArrowRight, Cable, Check, ChevronRight, CircleHelp,
-  Factory, Gauge, Layers3, Map, Mountain, Radio, ShieldAlert, Truck,
+  Activity, AlertTriangle, ArrowRight, Check, ChevronRight, CircleHelp,
+  Factory, GitBranch, Map, Radio, ShieldAlert, Truck, Waves,
 } from 'lucide-react';
 
-type VehicleProfile = 'land-cruiser' | 'haul-truck';
-type ViewMode = 'plan' | 'oblique';
+type SensorCount = 2 | 3;
+type ViewMode = 'process' | 'isometric';
+type Step = 0 | 1 | 2 | 3 | 4;
 
-function VehicleGlyph({ profile, className = '' }: { profile: VehicleProfile; className?: string }) {
-  if (profile === 'haul-truck') {
-    return <svg className={className} viewBox="0 0 112 54" role="img" aria-label="Illustrative haul truck, larger vehicle profile">
-      <path d="M8 11h55l16 14h22v16H8z" fill="currentColor" opacity=".18" stroke="currentColor" strokeWidth="2"/>
-      <path d="M18 13h43l12 13H18z" fill="currentColor" opacity=".2" stroke="currentColor" strokeWidth="2"/>
-      <path d="M9 27h23v14H9zm29 1h31v13H38zm35 0h24v13H73z" fill="currentColor" stroke="currentColor" strokeWidth="2"/>
-      <circle cx="26" cy="43" r="7" fill="#35403c" stroke="#e4d9bd" strokeWidth="2"/>
-      <circle cx="55" cy="43" r="7" fill="#35403c" stroke="#e4d9bd" strokeWidth="2"/>
-      <circle cx="86" cy="43" r="7" fill="#35403c" stroke="#e4d9bd" strokeWidth="2"/>
-    </svg>;
-  }
-  return <svg className={className} viewBox="0 0 70 38" role="img" aria-label="Illustrative Land Cruiser profile">
-    <path d="M6 12h11l7-7h22l9 8h8l4 6v9H5v-9z" fill="currentColor" opacity=".2" stroke="currentColor" strokeWidth="2"/>
-    <path d="M27 8h17l7 8H20z" fill="currentColor" opacity=".18" stroke="currentColor" strokeWidth="1.5"/>
-    <circle cx="18" cy="29" r="5.5" fill="#35403c" stroke="#e4d9bd" strokeWidth="1.5"/>
-    <circle cx="54" cy="29" r="5.5" fill="#35403c" stroke="#e4d9bd" strokeWidth="1.5"/>
-  </svg>;
-}
+const steps = [
+  { title: 'Discharge to conveyor', detail: 'A haul truck tips ore into the feed hopper. The sensing concept begins downstream, once material is on the conveyor—not in the truck.' },
+  { title: 'S1 detects a possible item', detail: 'Sensor 1 marks a possible metal item as it travels with the ore. This is an initial indication, not a confirmed event.' },
+  { title: 'S2 confirms and tracks', detail: 'Sensor 2 provides a second observation. The optional S3 arrangement adds another confirmation point and supports segment tracking discussion.' },
+  { title: 'Estimate the affected section', detail: 'A controller concept combines observations with conveyor geometry and speed to estimate which ore section is affected and when it may reach the diverter.' },
+  { title: 'Divert, then resume normal feed', detail: 'A conceptual diverter immediately before crusher feed sends the identified section to a hold / reject chute. The ordinary material path continues after it clears.' },
+];
 
-function SitePlan({ profile }: { profile: VehicleProfile }) {
-  return <svg viewBox="0 0 1000 560" className="site-svg plan-svg" role="img" aria-label={`Conceptual top-down site plan for ${profile === 'land-cruiser' ? 'Land Cruiser' : 'dump truck or haul truck'} pilot profile`}>
+function ConveyorDiagram({ sensors, view, step }: { sensors: SensorCount; view: ViewMode; step: Step }) {
+  const active = (n: Step) => step === n ? ' part-active' : '';
+  return <svg className={`conveyor-svg ${view}`} viewBox="0 0 1120 500" role="img" aria-label={`${view === 'process' ? 'Process schematic' : 'Isometric illustration'} showing truck discharge, conveyor sensors, a conceptual ore segment diverter, reject chute, and crusher feed`}>
     <defs>
-      <pattern id="plan-grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#dfd9c9" strokeWidth="1" opacity=".55"/></pattern>
-      <pattern id="zone-hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="10" height="10" fill="#f6e9c9"/><path d="M0 0V10" stroke="#bb852f" strokeWidth="2" opacity=".42"/></pattern>
-      <marker id="arrow-route" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" fill="#5e7867"/></marker>
+      <pattern id="ore-hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="#f2e3c3"/><path d="M0 0v8" stroke="#bd8b3d" strokeWidth="2" opacity=".5"/></pattern>
+      <marker id="flow-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4 0 8z" fill="#64816f"/></marker>
+      <marker id="reject-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4 0 8z" fill="#b88332"/></marker>
+      <linearGradient id="belt-face" x1="0" x2="0" y1="0" y2="1"><stop stopColor="#7b8c7e"/><stop offset="1" stopColor="#526b60"/></linearGradient>
     </defs>
-    <rect width="1000" height="560" fill="#f3f0e6"/>
-    <rect width="1000" height="560" fill="url(#plan-grid)" opacity=".75"/>
-    <path d="M-20 372 C120 366 187 356 280 356 S423 372 520 343 S670 311 774 310 S909 321 1030 294" fill="none" stroke="#d5cdb9" strokeWidth="78" strokeLinecap="round"/>
-    <path d="M-20 372 C120 366 187 356 280 356 S423 372 520 343 S670 311 774 310 S909 321 1030 294" fill="none" stroke="#f9f6ec" strokeWidth="62" strokeLinecap="round"/>
-    <path d="M-20 372 C120 366 187 356 280 356 S423 372 520 343 S670 311 774 310 S909 321 1030 294" fill="none" stroke="#758b78" strokeWidth="3" strokeDasharray="12 10" markerEnd="url(#arrow-route)"/>
-    <path d="M329 359 C367 444 465 465 552 438 C622 416 637 373 676 333" fill="none" stroke="#c39a53" strokeWidth="3" strokeDasharray="8 8" markerEnd="url(#arrow-route)"/>
-    <path d="M166 229h208v88H166z" fill="#e5e2d6" stroke="#aaa995" strokeWidth="2"/>
-    <path d="M179 242h182v61H179z" fill="#ece9dd" stroke="#c1bcaa" strokeWidth="1.5"/>
-    <path d="M188 265h164" stroke="#c0b9a5" strokeWidth="1" strokeDasharray="5 6"/>
-    <text x="270" y="215" textAnchor="middle" className="svg-label">STAGING / QUEUE</text>
-    <text x="270" y="283" textAnchor="middle" className="svg-sub">conceptual holding area</text>
-    <path d="M-5 374H164" stroke="#5e7867" strokeWidth="3" markerEnd="url(#arrow-route)"/>
-    <text x="36" y="337" className="svg-label">MINE APPROACH</text>
-    <text x="36" y="352" className="svg-sub">inbound haul path</text>
-    <g transform="translate(610 248)">
-      <path d="M0 27h74v66H0z" fill="url(#zone-hatch)" stroke="#b4822f" strokeWidth="2" strokeDasharray="5 4"/>
-      <path d="M10 29v62m54-62v62" stroke="#8d672b" strokeWidth="6"/>
-      <path d="M10 32h54" stroke="#8d672b" strokeWidth="4"/>
-      <circle cx="10" cy="34" r="5" fill="#fff6e1" stroke="#986a24" strokeWidth="2"/>
-      <circle cx="64" cy="34" r="5" fill="#fff6e1" stroke="#986a24" strokeWidth="2"/>
+    <rect width="1120" height="500" fill="#f4f1e7"/>
+    <path d="M0 414H1120" stroke="#e2ddcf"/>
+    <g className={`diagram-part${active(0)}`} data-part="discharge">
+      <path d="M52 119h155v62l-18 21H70l-18-21z" fill="#d8d9ce" stroke="#7c8a7f" strokeWidth="3"/>
+      <path d="M66 132h126v42l-14 15H80l-14-15z" fill="#eeeadd" stroke="#a9aa9b"/>
+      <path d="M80 179l24 25h54l24-25" fill="none" stroke="#849186" strokeWidth="3"/>
+      <text x="270" y="93" className="svg-label">TRUCK DISCHARGE</text>
+      <text x="130" y="220" textAnchor="middle" className="svg-sub">feed source only</text>
+      <path d="M101 83h58l19-24h44l17 18v30h-28V88h-28v19h-82z" fill="#71877a" stroke="#50685a" strokeWidth="2"/>
+      <circle cx="124" cy="109" r="9" fill="#f2efe5" stroke="#52675c" strokeWidth="3"/><circle cx="213" cy="109" r="9" fill="#f2efe5" stroke="#52675c" strokeWidth="3"/>
+      <path d="M130 204v58" stroke="#71877a" strokeWidth="2" strokeDasharray="5 5" markerEnd="url(#flow-arrow)"/>
+      <g fill="#b08c55" stroke="#8d7246" strokeWidth="1">{[[108,244],[128,251],[148,240],[167,253],[188,244]].map(([x,y],i)=><path key={i} d={`M${x} ${y}l8 -5 8 5 -3 8 -10 1z`}/>)}</g>
     </g>
-    <path d="M683 263h62" stroke="#ad7c2e"/>
-    <text x="752" y="253" className="svg-label">PROPOSED SENSOR PORTAL</text>
-    <text x="752" y="269" className="svg-sub">zone outline · siting unverified</text>
-    <text x="682" y="365" className="svg-sub">FIXED SUPPORTS</text>
-    <g transform="translate(824 252)">
-      <path d="M0 24h105v75H0z" fill="#d8ded2" stroke="#66796c" strokeWidth="2"/>
-      <path d="M12 37h81v40H12z" fill="#e7e9df" stroke="#98a294"/>
-      <path d="M20 90v9m64-9v9" stroke="#66796c" strokeWidth="4"/>
-      <path d="M34 24v-9h38v9" fill="none" stroke="#66796c" strokeWidth="2"/>
-      <text x="52" y="61" textAnchor="middle" className="svg-label">CRUSHER</text>
+    <g className={`diagram-part${active(0)}`} data-part="belt">
+      <path d="M180 278L952 278l61 39H234z" fill="url(#belt-face)" stroke="#455e52" strokeWidth="2"/>
+      <path d="M234 317h779v25H234z" fill="#d4d2c4" stroke="#9b9c8d" strokeWidth="2"/>
+      <path d="M248 342v39m170-39v39m190-39v39m190-39v39m170-39v39" stroke="#8b9186" strokeWidth="8"/>
+      <path d="M253 296H964" fill="none" stroke="#d2dfd1" strokeWidth="2" strokeDasharray="8 8" markerEnd="url(#flow-arrow)"/>
+      <g fill="#b6a078" stroke="#8e7954" strokeWidth="1">{[[282,286],[304,294],[334,285],[363,292],[400,284],[435,291],[480,286],[516,294],[565,285],[606,293],[650,284],[691,292],[742,285],[783,293],[827,284],[872,292],[919,285]].map(([x,y],i)=><path key={i} d={`M${x} ${y}l7 -5 9 3 3 6 -8 4 -10 -2z`}/>)}</g>
+      <text x="513" y="374" textAnchor="middle" className="svg-label">CONVEYOR · SENSING AFTER DISCHARGE</text>
     </g>
-    <text x="876" y="216" textAnchor="middle" className="svg-label">CRUSHER FEED</text>
-    <g transform="translate(545 150)">
-      <rect width="91" height="49" rx="4" fill="#d9e0dc" stroke="#637b70" strokeWidth="2"/>
-      <rect x="10" y="10" width="19" height="15" fill="#edf0e6" stroke="#8b9b8d"/>
-      <path d="M39 13h42M39 20h30m-30 8h35" stroke="#70877c" strokeWidth="2"/>
-      <text x="45" y="42" textAnchor="middle" className="svg-tiny">EDGE / OPERATOR</text>
+    <g className={`diagram-part${active(1)}`} data-part="s1">
+      <path d="M355 274v-64h42v64m-47-64h52" fill="none" stroke="#b27b29" strokeWidth="5"/>
+      <circle cx="376" cy="262" r="8" fill="#f5e8ca" stroke="#b27b29" strokeWidth="3"/>
+      <rect x="332" y="178" width="88" height="27" rx="4" fill="#f5ecd9" stroke="#c7a96a"/>
+      <text x="376" y="196" textAnchor="middle" className="svg-label">S1 · DETECT</text>
     </g>
-    <path d="M592 199v35m28-35v35" stroke="#6c8174" strokeWidth="2" strokeDasharray="4 4"/>
-    <g transform="translate(456 134)">
-      <path d="M0 17h29m-14-14v29" stroke="#b77f2b" strokeWidth="3"/>
-      <circle cx="15" cy="17" r="19" fill="none" stroke="#b77f2b" strokeDasharray="3 3"/>
-      <text x="17" y="-12" textAnchor="middle" className="svg-label">POWER / COMMS</text>
-      <text x="17" y="48" textAnchor="middle" className="svg-sub">location to confirm</text>
+    <g className={`diagram-part${active(2)}`} data-part="s2">
+      <path d="M535 274v-64h42v64m-47-64h52" fill="none" stroke="#668777" strokeWidth="5"/>
+      <circle cx="556" cy="262" r="8" fill="#e5eee7" stroke="#668777" strokeWidth="3"/>
+      <rect x="512" y="178" width="88" height="27" rx="4" fill="#e8eee6" stroke="#9aaf9e"/>
+      <text x="556" y="196" textAnchor="middle" className="svg-label">S2 · CONFIRM</text>
     </g>
-    <g transform="translate(399 422)">
-      <path d="M0 0h92v51H0z" fill="#eee4cf" stroke="#aa8753" strokeWidth="2" strokeDasharray="5 4"/>
-      <path d="M12 37l25-24 23 24z" fill="#d9c7a6" stroke="#a99068"/>
-      <text x="65" y="22" textAnchor="middle" className="svg-label">HOLD /</text><text x="65" y="35" textAnchor="middle" className="svg-label">BYPASS</text>
+    {sensors === 3 && <g className={`diagram-part${active(2)}`} data-part="s3">
+      <path d="M690 274v-64h42v64m-47-64h52" fill="none" stroke="#668777" strokeWidth="5"/>
+      <circle cx="711" cy="262" r="8" fill="#e5eee7" stroke="#668777" strokeWidth="3"/>
+      <rect x="666" y="178" width="91" height="27" rx="4" fill="#e8eee6" stroke="#9aaf9e"/>
+      <text x="711" y="196" textAnchor="middle" className="svg-label">S3 · OPTIONAL</text>
+    </g>}
+    <g className={`diagram-part${active(3)}`} data-part="controller">
+      <path d="M438 117h204v47H438z" rx="5" fill="#e1e6dd" stroke="#75877b" strokeWidth="2"/>
+      <rect x="450" y="128" width="29" height="23" rx="2" fill="#f4f2e9" stroke="#a8b1a6"/>
+      <path d="M489 130h74m-74 8h112m-112 8h86" stroke="#809187" strokeWidth="2"/>
+      <text x="540" y="109" textAnchor="middle" className="svg-label">CONTROLLER / TIMING ESTIMATE</text>
+      <path d="M376 177V156h62m118 0v-9m67 9h48v22m-158-14v19" fill="none" stroke="#89988b" strokeWidth="2" strokeDasharray="4 4"/>
+      <rect x="457" y="229" width="157" height="32" rx="4" fill="#f6efdf" stroke="#d2bf94"/>
+      <text x="535" y="243" textAnchor="middle" className="svg-tiny">AFFECTED ORE SECTION</text>
+      <text x="535" y="254" textAnchor="middle" className="svg-tiny">segment + arrival window: estimate only</text>
     </g>
-    <g transform={`translate(${profile === 'land-cruiser' ? 75 : 57} 343)`} className="vehicle-in-plan">
-      <VehicleGlyph profile={profile} className={`plan-vehicle${profile === 'haul-truck' ? ' plan-vehicle-large' : ''}`}/>
+    <g className={`diagram-part${active(3)}`} data-part="segment">
+      <path d="M769 278h95l17 39h-96z" fill="url(#ore-hatch)" stroke="#b88332" strokeWidth="2" strokeDasharray="5 4"/>
+      <path d="M770 269v-13m111 19v-13" stroke="#b88332" strokeWidth="2"/>
+      <text x="820" y="239" textAnchor="middle" className="svg-tiny">CONCEPTUAL SEGMENT</text>
     </g>
-    <text x="35" y="430" className="svg-sub">{profile === 'land-cruiser' ? 'LAND CRUISER · ILLUSTRATIVE' : 'DUMP / HAUL TRUCK · ILLUSTRATIVE'}</text>
-    <path d="M949 61v52m0-52l-7 10m7-10l7 10" stroke="#66766d" strokeWidth="2"/>
-    <text x="949" y="47" textAnchor="middle" className="svg-tiny">N</text>
-    <g transform="translate(35 493)"><path d="M0 0h48" stroke="#5e7867" strokeWidth="3" markerEnd="url(#arrow-route)"/><text x="0" y="18" className="svg-sub">Illustrative route direction only</text></g>
-    <text x="965" y="540" textAnchor="end" className="svg-tiny">NOT TO SCALE · DIMENSIONS PENDING SURVEY</text>
-  </svg>;
-}
-
-function ObliqueSite({ profile }: { profile: VehicleProfile }) {
-  return <svg viewBox="0 0 1000 560" className="site-svg oblique-svg" role="img" aria-label={`Conceptual oblique site layout for ${profile === 'land-cruiser' ? 'Land Cruiser' : 'dump truck or haul truck'} pilot profile`}>
-    <defs>
-      <pattern id="oblique-hatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="9" height="9" fill="#f3e7ca"/><path d="M0 0V9" stroke="#b37e2a" strokeWidth="2" opacity=".5"/></pattern>
-      <marker id="arrow-oblique" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5 0 10z" fill="#617d6b"/></marker>
-    </defs>
-    <rect width="1000" height="560" fill="#f3f0e6"/>
-    <path d="M94 384L496 156 932 371 526 502z" fill="#e2decf" stroke="#bdb7a6" strokeWidth="2"/>
-    <path d="M120 373L498 174 897 371 526 477z" fill="#eeebdf"/>
-    <path d="M42 398L470 165" stroke="#c8bfaa" strokeWidth="76" strokeLinecap="round"/>
-    <path d="M42 398L470 165" stroke="#f8f5eb" strokeWidth="58" strokeLinecap="round"/>
-    <path d="M42 398L470 165" stroke="#718878" strokeWidth="3" strokeDasharray="12 10" markerEnd="url(#arrow-oblique)"/>
-    <path d="M365 247L427 215v96l-62 32z" fill="#dfdacb" stroke="#aaa490" strokeWidth="2"/>
-    <path d="M378 258l37-20v58l-37 20z" fill="#ebe7da" stroke="#c2bba9"/>
-    <text x="325" y="215" className="svg-label">STAGING / QUEUE</text>
-    <text x="331" y="230" className="svg-sub">concept only</text>
-    <g transform="translate(532 239)">
-      <path d="M0 33L68 0v94L0 128z" fill="url(#oblique-hatch)" stroke="#ae7928" strokeWidth="2" strokeDasharray="5 4"/>
-      <path d="M5 31v87m57-116v87" stroke="#8c672e" strokeWidth="7"/>
-      <path d="M5 31L62 2" stroke="#8c672e" strokeWidth="5"/>
-      <circle cx="5" cy="35" r="5" fill="#fff6e1" stroke="#956a29" strokeWidth="2"/>
-      <circle cx="62" cy="6" r="5" fill="#fff6e1" stroke="#956a29" strokeWidth="2"/>
+    <g className={`diagram-part${active(4)}`} data-part="diverter">
+      <path d="M888 274l35-26 34 28-19 25z" fill="#c69b50" stroke="#8c672c" strokeWidth="3"/>
+      <path d="M911 282l-54 94 56 29 61-112" fill="#e7d8b8" stroke="#927b55" strokeWidth="3"/>
+      <path d="M919 300l-45 74" stroke="#b88332" strokeWidth="3" markerEnd="url(#reject-arrow)"/>
+      <path d="M889 376l44 24 40-10v39l-40 13-44-24z" fill="#d7c7a7" stroke="#927b55" strokeWidth="2"/>
+      <text x="937" y="462" textAnchor="middle" className="svg-label">HOLD / REJECT CHUTE</text>
+      <text x="938" y="477" textAnchor="middle" className="svg-tiny">PLACEHOLDER · ENGINEERING SELECTION PENDING</text>
     </g>
-    <path d="M604 251l83-45" stroke="#a8792e"/>
-    <text x="693" y="196" className="svg-label">PROPOSED SENSOR PORTAL</text>
-    <text x="693" y="212" className="svg-sub">zone; not an installed system</text>
-    <g transform="translate(748 189)">
-      <path d="M0 37l98-49v104L0 143z" fill="#cfd7cc" stroke="#667a6d" strokeWidth="2"/>
-      <path d="M0 37l98-49 21 13-98 50z" fill="#e0e4d9" stroke="#849386" strokeWidth="2"/>
-      <path d="M20 37l60-30v54l-60 30z" fill="#dce1d8" stroke="#95a092"/>
-      <path d="M30 55l42-21v26L30 81z" fill="#758579"/>
-      <text x="67" y="122" textAnchor="middle" className="svg-label">CRUSHER</text>
+    <g className={`diagram-part${active(4)}`} data-part="crusher">
+      <path d="M1001 236h84v93h-84z" fill="#d8ddd2" stroke="#64776a" strokeWidth="3"/>
+      <path d="M1014 251h57v52h-57z" fill="#eef0e8" stroke="#9ba69a" strokeWidth="2"/>
+      <path d="M1023 258l19 19-19 19m39-38l-19 19 19 19" fill="none" stroke="#758579" strokeWidth="3"/>
+      <path d="M954 296h47" fill="none" stroke="#64816f" strokeWidth="3" markerEnd="url(#flow-arrow)"/>
+      <text x="1043" y="218" textAnchor="middle" className="svg-label">CRUSHER FEED</text>
+      <text x="1043" y="350" textAnchor="middle" className="svg-sub">normal path resumes</text>
     </g>
-    <g transform="translate(516 117)">
-      <path d="M0 24l69-35 50 25-68 35z" fill="#e4e9df" stroke="#6b8175" strokeWidth="2"/>
-      <path d="M0 24v44l51 26V49z" fill="#cad4ca" stroke="#6b8175" strokeWidth="2"/>
-      <path d="M51 49l68-35v43L51 94z" fill="#b9c7bb" stroke="#6b8175" strokeWidth="2"/>
-      <path d="M16 30l24 12v24L16 54z" fill="#84968a"/>
+    <g className="diagram-part" data-part="direction">
+      <rect x="25" y="25" width="261" height="31" rx="4" fill="#e8eee6" stroke="#cbd5ca"/>
+      <circle cx="42" cy="40" r="5" fill="#668777"/>
+      <text x="55" y="44" className="svg-tiny">SENSING BEGINS ONLY AFTER TRUCK DISCHARGE</text>
     </g>
-    <path d="M538 208l-4 22m53-50l4 25" stroke="#637b70" strokeWidth="2" strokeDasharray="4 4"/>
-    <text x="521" y="103" className="svg-label">OPERATOR / EDGE ENCLOSURE</text>
-    <g transform="translate(422 115)">
-      <path d="M0 24L23 12l23 12-23 12z" fill="#d9be82" stroke="#9a742e" strokeWidth="2"/>
-      <path d="M23 12V-4" stroke="#9a742e" strokeWidth="3"/>
-      <circle cx="23" cy="-5" r="4" fill="#b77f2b"/>
-      <text x="18" y="-22" textAnchor="middle" className="svg-label">POWER / COMMS</text>
-      <text x="19" y="55" textAnchor="middle" className="svg-sub">position pending review</text>
-    </g>
-    <path d="M264 334L320 306l63 31-55 31z" fill="#f0e6d2" stroke="#a98956" strokeWidth="2" strokeDasharray="5 4"/>
-    <text x="306" y="350" textAnchor="middle" className="svg-label">HOLD / BYPASS</text>
-    <path d="M74 394L160 347" stroke="#617d6b" strokeWidth="3" markerEnd="url(#arrow-oblique)"/>
-    <text x="72" y="433" className="svg-label">MINE APPROACH</text>
-    <text x="72" y="449" className="svg-sub">inbound haul path</text>
-    <g transform={`translate(${profile === 'land-cruiser' ? 154 : 123} ${profile === 'land-cruiser' ? 348 : 340}) rotate(-28)`}>
-      <VehicleGlyph profile={profile} className={`oblique-vehicle${profile === 'haul-truck' ? ' oblique-vehicle-large' : ''}`}/>
-    </g>
-    <text x="35" y="526" className="svg-sub">Route depiction is illustrative; actual traffic plan not established.</text>
-    <text x="965" y="540" textAnchor="end" className="svg-tiny">OBLIQUE CONCEPT · NOT TO SCALE · SITING PENDING REVIEW</text>
   </svg>;
 }
 
 export default function Scenario() {
-  const [profile, setProfile] = useState<VehicleProfile>('land-cruiser');
-  const [view, setView] = useState<ViewMode>('plan');
+  const [sensors, setSensors] = useState<SensorCount>(2);
+  const [view, setView] = useState<ViewMode>('process');
+  const [step, setStep] = useState<Step>(0);
+  const stepBack = () => setStep(s => Math.max(0, s - 1) as Step);
+  const stepForward = () => setStep(s => Math.min(4, s + 1) as Step);
   return <main className="app-shell scenario-shell">
     <aside className="sidebar">
       <div className="brand"><div className="brand-mark"><Activity size={20}/></div><div><b>HEATGUARD</b><span>ORE PASS SIMULATION</span></div></div>
       <div className="side-label">WORKSPACE</div>
       <Link href="/" className="side-link scenario-nav" data-testid="link-pass-review"><Activity size={16}/> Pass review <ChevronRight size={13}/></Link>
       <Link href="/scenario" className="side-active scenario-nav" data-testid="link-scenario"><Map size={16}/> Scenario layout <span className="side-count">WP1</span></Link>
-      <div className="side-label">REFERENCE</div>
-      <div className="side-link"><ShieldAlert size={16}/> Concept basis</div>
-      <div className="sidebar-spacer"/>
-      <div className="side-note"><ShieldAlert size={16}/><span>Prototype only<br/><b>No operational control path</b></span></div>
+      <div className="side-label">REFERENCE</div><div className="side-link"><ShieldAlert size={16}/> Concept basis</div>
+      <div className="sidebar-spacer"/><div className="side-note"><ShieldAlert size={16}/><span>Prototype only<br/><b>No operational control path</b></span></div>
       <div className="sidebar-foot"><span className="live-dot"/> LOCAL WORKSPACE <span className="mono">v0.1</span></div>
     </aside>
     <section className="main-area">
-      <header className="topbar">
-        <div className="crumb">HEATGUARD <span>/</span> <b>Scenario &amp; system layout</b></div>
-        <div className="top-right"><span className="synthetic-pill"><i/> CONCEPT ONLY</span><Link href="/" className="scenario-top-link" data-testid="link-top-pass-review">Pass review <ArrowRight size={14}/></Link><button className="icon-button" title="Concept basis" aria-label="Concept basis" onClick={()=>document.getElementById('basis')?.scrollIntoView({behavior:'smooth'})} data-testid="button-scenario-about"><CircleHelp size={17}/></button></div>
-      </header>
-      <nav className="mobile-workspace-nav" aria-label="Workspace pages">
-        <Link href="/" data-testid="link-mobile-pass-review"><Activity size={14}/>Pass review</Link>
-        <Link href="/scenario" className="mobile-workspace-active" data-testid="link-mobile-scenario"><Map size={14}/>Scenario layout</Link>
-      </nav>
+      <header className="topbar"><div className="crumb">HEATGUARD <span>/</span> <b>Scenario &amp; system layout</b></div><div className="top-right"><span className="synthetic-pill"><i/> CONCEPT ONLY</span><Link href="/" className="scenario-top-link" data-testid="link-top-pass-review">Pass review <ArrowRight size={14}/></Link><button className="icon-button" title="Concept basis" aria-label="Concept basis" onClick={()=>document.getElementById('basis')?.scrollIntoView({behavior:'smooth'})} data-testid="button-scenario-about"><CircleHelp size={17}/></button></div></header>
+      <nav className="mobile-workspace-nav" aria-label="Workspace pages"><Link href="/" data-testid="link-mobile-pass-review"><Activity size={14}/>Pass review</Link><Link href="/scenario" className="mobile-workspace-active" data-testid="link-mobile-scenario"><Map size={14}/>Scenario layout</Link></nav>
       <div className="content scenario-content">
-        <div className="page-heading fade-in">
-          <div><div className="eyebrow">WP1 · SITE CONCEPT <span className="heading-index">/ 02</span></div><h1>Scenario &amp; system layout</h1><p>Review the proposed sensing zone in context — before site survey and engineering review.</p></div>
-          <div className="concept-state" data-testid="status-concept-only"><span/><b>CONCEPTUAL · NOT FOR CONSTRUCTION</b></div>
-        </div>
-        <div className="scenario-caveat"><AlertTriangle size={17}/><p><b>Illustrative arrangement only.</b> No surveyed dimensions, final siting, signal range, performance, or operating route behavior is established here. Dimensions and locations remain pending survey and site review.</p></div>
+        <div className="page-heading fade-in"><div><div className="eyebrow">WP1 · CONVEYOR PROCESS CONCEPT <span className="heading-index">/ 02</span></div><h1>After discharge, before crusher</h1><p>Trace a possible metal item through the conveyor process and a conceptual removal point.</p></div><div className="concept-state" data-testid="status-concept-only"><span/><b>CONCEPTUAL · NOT FOR CONSTRUCTION</b></div></div>
+        <div className="scenario-caveat"><AlertTriangle size={17}/><p><b>Discussion concept only.</b> Layout, sensor positions, affected-segment boundaries, timing, and the removal mechanism require engineering and site validation. Nothing on this page controls equipment or certifies safety.</p></div>
         <section className="scenario-panel panel">
-          <div className="scenario-toolbar">
-            <div><div className="eyebrow">SITE ARRANGEMENT</div><h2>Proposed heat-sensing zone before crusher feed</h2><p>Diagram separates fixed infrastructure from the proposed sensor zone.</p></div>
+          <div className="scenario-toolbar"><div><div className="eyebrow">MATERIAL FLOW / WP1</div><h2>Detect · confirm · estimate · remove</h2><p>Truck discharge is the feed source. Sensing is shown on the conveyor downstream.</p></div>
             <div className="scenario-controls">
-              <fieldset className="profile-select" aria-label="Pilot vehicle profile" data-testid="selector-vehicle-profile">
-                <legend>PILOT PROFILE</legend>
-                <button type="button" className={profile==='land-cruiser'?'selected':''} aria-pressed={profile==='land-cruiser'} onClick={()=>setProfile('land-cruiser')} data-testid="button-profile-land-cruiser"><Truck size={14}/> Land Cruiser</button>
-                <button type="button" className={profile==='haul-truck'?'selected':''} aria-pressed={profile==='haul-truck'} onClick={()=>setProfile('haul-truck')} data-testid="button-profile-haul-truck"><Truck size={17}/> Dump / haul truck</button>
+              <fieldset className="profile-select" aria-label="Sensor arrangement" data-testid="selector-sensor-arrangement"><legend>SENSOR ARRANGEMENT</legend>
+                <button type="button" className={sensors===2?'selected':''} aria-pressed={sensors===2} onClick={()=>setSensors(2)} data-testid="button-sensors-2"><Radio size={14}/> 2 sensors</button>
+                <button type="button" className={sensors===3?'selected':''} aria-pressed={sensors===3} onClick={()=>setSensors(3)} data-testid="button-sensors-3"><Waves size={14}/> 3 sensors</button>
               </fieldset>
-              <div className="view-switch" role="group" aria-label="Select layout view" data-testid="selector-layout-view">
-                <button type="button" className={view==='plan'?'selected':''} aria-pressed={view==='plan'} onClick={()=>setView('plan')} data-testid="button-view-plan"><Map size={14}/> Site plan</button>
-                <button type="button" className={view==='oblique'?'selected':''} aria-pressed={view==='oblique'} onClick={()=>setView('oblique')} data-testid="button-view-oblique"><Layers3 size={14}/> 3D view</button>
-              </div>
+              <div className="view-switch" role="group" aria-label="Select illustration view" data-testid="selector-layout-view"><button type="button" className={view==='process'?'selected':''} aria-pressed={view==='process'} onClick={()=>setView('process')} data-testid="button-view-process"><GitBranch size={14}/> Process</button><button type="button" className={view==='isometric'?'selected':''} aria-pressed={view==='isometric'} onClick={()=>setView('isometric')} data-testid="button-view-isometric"><Map size={14}/> Isometric</button></div>
             </div>
           </div>
-          <div className="active-profile-note" data-testid="status-profile-note"><span className="profile-glyph"><VehicleGlyph profile={profile}/></span><span><b>{profile==='land-cruiser'?'Land Cruiser':'Dump truck / haul truck'} profile</b><small>{profile==='land-cruiser'?'Compact illustrative vehicle symbol; route shown for concept review only.':'Larger illustrative vehicle symbol; approach and queue depiction do not establish turning or clearance.'}</small></span></div>
-          <div className="diagram-pan-hint"><span aria-hidden="true">↔</span> Swipe or scroll the drawing horizontally to inspect the full layout.</div>
-          <div className="drawing-frame" role="region" aria-label={`Scrollable conceptual ${view === 'plan' ? 'site plan' : '3D layout'} diagram`} tabIndex={0} data-testid="drawing-site-layout">
-            <div className="drawing-stamp"><span>WP1</span><span>CONCEPT / UNVERIFIED</span></div>
-            {view==='plan'?<SitePlan profile={profile}/>:<ObliqueSite profile={profile}/>}
-            <div className="drawing-caption"><span>{view==='plan'?'TOP-DOWN SITE PLAN':'OBLIQUE / ISOMETRIC STUDY'}</span><span>NOT TO SCALE · SITE REVIEW REQUIRED</span></div>
-          </div>
-          <div className="legend-row" aria-label="Drawing legend">
-            <span className="legend-title">LEGEND</span><span><i className="legend-road"/>Conceptual haul path</span><span><i className="legend-zone"/>Proposed sensor zone</span><span><i className="legend-fixed"/>Fixed infrastructure</span><span><i className="legend-hold"/>Alternate hold / bypass</span><span><i className="legend-equipment"><Radio size={11}/></i>Sensor elements</span>
-          </div>
+          <div className="diagram-meta"><span className="profile-glyph"><Truck size={23}/></span><span><b>{sensors}-sensor concept</b><small>{sensors===2?'S1 detects; S2 confirms and supports tracking.':'S1 detects; S2 and optional S3 add confirmation / segment-tracking points.'}</small></span><span className="diagram-stamp">WP1 / CONCEPT ONLY</span></div>
+          <div className="diagram-pan-hint">Swipe or scroll the drawing horizontally to inspect the process.</div>
+          <div className="drawing-frame" role="region" aria-label={`${view} conveyor process diagram`} tabIndex={0} data-testid="drawing-conveyor-process"><ConveyorDiagram sensors={sensors} view={view} step={step}/><div className="drawing-caption"><span>{view==='process'?'CONVEYOR PROCESS SCHEMATIC':'ISOMETRIC PROCESS STUDY'}</span><span>NOT TO SCALE · SITE INPUTS PENDING</span></div></div>
+          <div className="legend-row"><span className="legend-title">KEY</span><span><i className="legend-road"/>Normal ore flow</span><span><i className="legend-zone"/>Affected section · conceptual</span><span><i className="legend-hold"/>Hold / reject route</span><span><i className="legend-fixed"/>Equipment placeholder</span></div>
+        </section>
+        <section className="walkthrough panel" aria-label="Step-by-step process walkthrough" data-testid="panel-walkthrough">
+          <div className="walkthrough-top"><div><div className="eyebrow">CLICK-THROUGH WALKTHROUGH</div><h2>{String(step+1).padStart(2,'0')} / 05 · {steps[step].title}</h2></div><div className="walkthrough-controls"><button type="button" onClick={stepBack} disabled={step===0} aria-label="Previous step" data-testid="button-step-previous">Previous</button><button type="button" onClick={stepForward} disabled={step===4} aria-label="Next step" data-testid="button-step-next">Next <ArrowRight size={14}/></button></div></div>
+          <p className="walkthrough-detail" data-testid="text-step-explanation">{steps[step].detail}</p>
+          <div className="step-track" role="group" aria-label="Choose walkthrough step">{steps.map((item,index)=><button key={item.title} type="button" className={step===index?'step-selected':''} aria-current={step===index?'step':undefined} onClick={()=>setStep(index as Step)} data-testid={`button-walkthrough-step-${index+1}`}><span>{String(index+1).padStart(2,'0')}</span><b>{item.title}</b></button>)}</div>
         </section>
         <section className="scenario-lower">
-          <article className="basis-card panel" id="basis" data-testid="panel-design-basis">
-            <div className="eyebrow">DESIGN BASIS / CAVEATS</div><h2>What this view can — and cannot — say</h2>
-            <p>This layout frames a discussion about introducing a heat-sensing zone on the inbound approach to crusher feed. It is a location concept, not a surveyed plan or engineering drawing.</p>
-            <div className="basis-list">
-              <div><span className="basis-mark"><Check size={13}/></span><span><b>For review</b><small>Approach, staging, zone relationship, enclosure, utilities and an alternate hold area.</small></span></div>
-              <div><span className="basis-mark pending"><AlertTriangle size={13}/></span><span><b>Pending site work</b><small>Surveyed dimensions, clearances, foundations, cable routes, utilities and final equipment siting.</small></span></div>
-              <div><span className="basis-mark pending"><AlertTriangle size={13}/></span><span><b>Not established</b><small>Detection range, performance, throughput, traffic rules or safety certification.</small></span></div>
-            </div>
-            <div className="basis-foot"><ShieldAlert size={14}/> No engineering approval or operational control is implied.</div>
-          </article>
-          <article className="sequence-card panel" data-testid="panel-pass-sequence">
-            <div className="sequence-head"><div><div className="eyebrow">CONCEPTUAL PASS SEQUENCE</div><h2>Review the intended context</h2></div><span className="sequence-badge">DISCUSSION AID</span></div>
-            <ol className="sequence-list">
-              <li><span>01</span><div><b>Approach &amp; staging</b><small>Vehicle arrives along the depicted inbound path; queue placement remains a site decision.</small></div><ArrowRight size={14}/></li>
-              <li><span>02</span><div><b>Proposed sensing zone</b><small>Portal location is a concept. Any sensing arrangement requires design and validation.</small></div><Gauge size={15}/></li>
-              <li><span>03</span><div><b>Human review context</b><small>Edge / operator enclosure and power-comms location are illustrative, pending review.</small></div><Cable size={15}/></li>
-              <li><span>04</span><div><b>Crusher feed or hold discussion</b><small>Crusher and alternate area are shown for context only; no route behavior is defined.</small></div><Factory size={15}/></li>
-            </ol>
-            <div className="sequence-note"><Mountain size={14}/> Sequence is a discussion outline, not an operating procedure.</div>
-          </article>
+          <article className="basis-card panel" id="basis" data-testid="panel-design-basis"><div className="eyebrow">ENGINEERING INPUTS / LIMITS</div><h2>Timing is an estimate—not a preset</h2><p>An arrival window cannot be responsibly shown until actual conveyor speed, sensor-to-diverter distances, and equipment response are provided and validated.</p><div className="basis-list">
+            <div><span className="basis-mark"><Check size={13}/></span><span><b>Concept intent</b><small>Isolate the affected ore section while normal material flow continues after it clears.</small></span></div>
+            <div><span className="basis-mark pending"><AlertTriangle size={13}/></span><span><b>Inputs still required</b><small>Measured conveyor speed, surveyed distances, material behavior, and response times.</small></span></div>
+            <div><span className="basis-mark pending"><AlertTriangle size={13}/></span><span><b>Mechanism not selected</b><small>Diverter and hold / reject chute are placeholders pending engineering selection.</small></span></div>
+          </div><div className="basis-foot"><ShieldAlert size={14}/> Nothing here controls equipment or certifies safety.</div></article>
+          <article className="sequence-card panel" data-testid="panel-process-sequence"><div className="sequence-head"><div><div className="eyebrow">PROCESS LOGIC</div><h2>One affected section. Main feed resumes.</h2></div><span className="sequence-badge">CONCEPT ONLY</span></div><ol className="sequence-list">
+            <li><span>01</span><div><b>Discharge</b><small>Ore tips into hopper and lands on conveyor.</small></div><Truck size={15}/></li>
+            <li><span>02</span><div><b>Detect + confirm</b><small>S1 flags a possible item; S2 and optional S3 confirm / track.</small></div><Radio size={15}/></li>
+            <li><span>03</span><div><b>Estimate segment arrival</b><small>Window depends on real speed, distances, and response.</small></div><Activity size={15}/></li>
+            <li><span>04</span><div><b>Remove, then continue</b><small>Conceptual diverter routes the section to hold; normal feed proceeds.</small></div><Factory size={15}/></li>
+          </ol><div className="sequence-note"><GitBranch size={14}/> Layout and segment boundaries require engineering validation.</div></article>
         </section>
         <div className="scenario-bottom-nav"><span>Continue to pass-record examples</span><Link href="/" className="primary-button" data-testid="link-scenario-to-review">Open pass review <ArrowRight size={15}/></Link></div>
-        <footer className="page-footer"><span>HEATGUARD <i>·</i> LOCAL CONCEPT WORKSPACE</span><span>SCHEMATIC ONLY · SURVEY / SITE REVIEW PENDING</span></footer>
+        <footer className="page-footer"><span>HEATGUARD <i>·</i> LOCAL CONCEPT WORKSPACE</span><span>NO OPERATIONAL CONTROL · VALIDATION REQUIRED</span></footer>
       </div>
     </section>
   </main>;
