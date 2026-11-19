@@ -487,3 +487,27 @@
     inset: -1px;
   }
 }
+
+.storage-notice {
+  margin: -7px 0 16px;
+  padding: 9px 12px;
+  border: 1px solid #d5be91;
+  border-left: 3px solid #bc8529;
+  border-radius: 6px;
+  background: #faf4e8;
+  color: #6d562e;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.storage-error {
+  border-color: #d9b5a7;
+  border-left-color: #ad634e;
+  background: #fbefea;
+  color: #824d3d;
+}
+
+.storage-icon.storage-error-icon {
+  background: #f5e6de;
+  color: #a7644f;
+}

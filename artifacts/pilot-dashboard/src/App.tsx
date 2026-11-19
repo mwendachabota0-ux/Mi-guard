@@ -4,7 +4,18 @@ import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import NotFound from '@/pages/not-found';
-import { Activity, Archive, ArrowDownToLine, ArrowUpRight, Check, ChevronDown, CircleHelp, ClipboardCheck, FilePlus2, Filter, Search, ShieldAlert, Truck, X } from 'lucide-react';
+import { Activity, Archive, ArrowDownToLine, ArrowUpRight, Check, ChevronDown, CircleHelp, ClipboardCheck, FilePlus2, Filter, Search, ShieldAlert, X } from 'lucide-react';
+import {
+  cloneSampleRecords,
+  createUniqueRecordId,
+  loadStoredRecords,
+  recordsToCsv,
+  SYNTHETIC_DATA_LABEL,
+  type CaseId,
+  type DetectionState,
+  type EventRecord,
+  type OperatorAction,
+} from '@/lib/event-records';
 import {
   Route,
   Switch,
@@ -14,28 +25,20 @@ import {
 
 const queryClient = new QueryClient();
 
-type CaseId = 'A' | 'B' | 'C' | 'D';
-type DetectionState = 'No Detection Indicated' | 'Illustrative Event Flag' | 'Requires Validation / Operator Review';
-type OperatorAction = 'Hold / Inspect' | 'Clear' | 'Escalate' | 'Unassigned';
-type EventRecord = {
-  id: string; timestamp: string; vehicleRef: string; loadRef: string; caseId: CaseId;
-  detectionState: DetectionState; operatorAction: OperatorAction;
-  emiLevel: number; magneticLevel: number; note: string; source: string;
-};
 const STORAGE_KEY = 'pilot-records-v1';
-const SYNTHETIC = 'ILLUSTRATIVE SYNTHETIC DATA — NOT SITE MEASUREMENTS';
+const SYNTHETIC = SYNTHETIC_DATA_LABEL;
 const DISCLAIMER = 'CONCEPTUAL SIMULATION — For technical presentation only. Equipment configuration, detection performance and operating response are subject to detailed engineering, controlled tests and site approval.';
-const seed: EventRecord[] = [
-  { id:'PR-24018', timestamp:'2025-02-14T10:42:00', vehicleRef:'TR-07', loadRef:'LD-1842', caseId:'A', detectionState:'No Detection Indicated', operatorAction:'Clear', emiLevel:18.4, magneticLevel:22.1, note:'Synthetic baseline pass for interface review.', source:'Sample case' },
-  { id:'PR-24017', timestamp:'2025-02-14T10:18:00', vehicleRef:'TR-12', loadRef:'LD-1839', caseId:'B', detectionState:'Illustrative Event Flag', operatorAction:'Hold / Inspect', emiLevel:68.2, magneticLevel:54.7, note:'Illustrative event flag; review site-approved response.', source:'Sample case' },
-  { id:'PR-24016', timestamp:'2025-02-14T09:56:00', vehicleRef:'TR-04', loadRef:'LD-1833', caseId:'C', detectionState:'Requires Validation / Operator Review', operatorAction:'Escalate', emiLevel:42.6, magneticLevel:71.3, note:'Synthetic ambiguous example requiring human validation.', source:'Sample case' },
-  { id:'PR-24015', timestamp:'2025-02-14T09:21:00', vehicleRef:'TR-09', loadRef:'LD-1827', caseId:'A', detectionState:'No Detection Indicated', operatorAction:'Clear', emiLevel:21.7, magneticLevel:19.5, note:'Second synthetic baseline example.', source:'Sample case' },
-  { id:'PR-24014', timestamp:'2025-02-14T08:47:00', vehicleRef:'TR-03', loadRef:'LD-1822', caseId:'B', detectionState:'Illustrative Event Flag', operatorAction:'Unassigned', emiLevel:61.8, magneticLevel:59.2, note:'Example record for operator workflow discussion.', source:'Sample case' },
-];
-const caseLabel: Record<CaseId,string> = { A:'Baseline example', B:'Illustrative flag', C:'Review required', D:'Repeated-run examples' };
 const statusClass = (state: DetectionState) => state.startsWith('No Detection') ? 'status-clear' : state.startsWith('Illustrative') ? 'status-flag' : 'status-review';
-function readRecords(): EventRecord[] {
-  try { const stored = localStorage.getItem(STORAGE_KEY); return stored ? JSON.parse(stored) as EventRecord[] : seed; } catch { return seed; }
+function loadBrowserRecords() {
+  try {
+    return loadStoredRecords(window.localStorage, STORAGE_KEY);
+  } catch {
+    return {
+      records: cloneSampleRecords(),
+      recoveryNotice: null,
+      storageError: 'Browser storage is unavailable. Changes may not survive a reload.',
+    };
+  }
 }
 function Trace({ variant }: { variant: CaseId }) {
   const paths: Record<CaseId,string> = {
@@ -47,7 +50,10 @@ function Trace({ variant }: { variant: CaseId }) {
   return <svg viewBox="0 0 400 72" role="img" aria-label={`Synthetic illustrative signal trace, case ${variant}`} className="trace"><path className="trace-grid" d="M0 18H400M0 36H400M0 54H400M80 0V72M160 0V72M240 0V72M320 0V72"/><path d={paths[variant]} className={`trace-line trace-${variant.toLowerCase()}`} /></svg>;
 }
 function Home() {
-  const [records, setRecords] = useState<EventRecord[]>(readRecords);
+  const [initialLoad] = useState(loadBrowserRecords);
+  const [records, setRecords] = useState<EventRecord[]>(initialLoad.records);
+  const [recoveryNotice] = useState(initialLoad.recoveryNotice);
+  const [storageError, setStorageError] = useState(initialLoad.storageError);
   const [selectedId, setSelectedId] = useState(records[0]?.id ?? '');
   const [query, setQuery] = useState('');
   const [filterCase, setFilterCase] = useState('All cases');
@@ -57,12 +63,19 @@ function Home() {
   const [chosenCase, setChosenCase] = useState<CaseId>('A');
   const [note, setNote] = useState('');
   const [checks, setChecks] = useState([false,false,false]);
-  useEffect(() => { localStorage.setItem(STORAGE_KEY, JSON.stringify(records)); }, [records]);
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+      setStorageError(null);
+    } catch {
+      setStorageError('Browser storage is unavailable. Changes may not survive a reload.');
+    }
+  }, [records]);
   const filtered = useMemo(() => records.filter(r => {
     const haystack = `${r.id} ${r.vehicleRef} ${r.loadRef} ${r.note} ${r.caseId}`.toLowerCase();
     return haystack.includes(query.toLowerCase()) && (filterCase === 'All cases' || r.caseId === filterCase);
   }), [records, query, filterCase]);
-  const current = records.find(r => r.id === selectedId) ?? filtered[0] ?? records[0];
+  const current = filtered.find(r => r.id === selectedId) ?? filtered[0];
   useEffect(() => { if (filtered.length && !filtered.some(r => r.id === selectedId)) setSelectedId(filtered[0].id); }, [filtered, selectedId]);
   const action = (id:string, next:OperatorAction) => setRecords(list => list.map(r => r.id === id ? {...r, operatorAction:next} : r));
   const createPass = (e: React.FormEvent<HTMLFormElement>) => {
@@ -70,14 +83,13 @@ function Home() {
     const states: Record<CaseId,DetectionState> = { A:'No Detection Indicated', B:'Illustrative Event Flag', C:'Requires Validation / Operator Review', D:'Requires Validation / Operator Review' };
     const presets: Record<CaseId,[number,number]> = { A:[19.8,23.4], B:[63.7,56.1], C:[46.3,69.8], D:[51.2,62.4] };
     const [emiLevel, magneticLevel] = presets[chosenCase];
-    const record:EventRecord = { id:`PR-${Math.floor(Date.now()/1000).toString().slice(-6)}`, timestamp:new Date().toISOString(), vehicleRef:vehicle.trim() || 'TR-XX', loadRef:load.trim() || 'LD-XXXX', caseId:chosenCase, detectionState:states[chosenCase], operatorAction:'Unassigned', emiLevel, magneticLevel, note:note.trim() || 'Simulated pass created for workflow review.', source:'User simulated' };
+    const record:EventRecord = { id:createUniqueRecordId(records), timestamp:new Date().toISOString(), vehicleRef:vehicle.trim() || 'TR-XX', loadRef:load.trim() || 'LD-XXXX', caseId:chosenCase, detectionState:states[chosenCase], operatorAction:'Unassigned', emiLevel, magneticLevel, note:note.trim() || 'Simulated pass created for workflow review.', source:'User simulated', syntheticLabel:SYNTHETIC_DATA_LABEL };
     setRecords(list => [record,...list]); setSelectedId(record.id); setShowCreate(false); setNote('');
   };
   const exportRecords = (format:'json'|'csv') => {
-    const content = format === 'json' ? JSON.stringify(records,null,2) :
-      [Object.keys(records[0] ?? {}).join(','), ...records.map(r => Object.values(r).map(v => `"${String(v).replaceAll('"','""')}"`).join(','))].join('\n');
-    const blob = new Blob([content], {type:format === 'json' ? 'application/json' : 'text/csv'});
-    const url = URL.createObjectURL(blob); const link = document.createElement('a'); link.href=url; link.download=`pilot-records.${format}`; link.click(); URL.revokeObjectURL(url);
+    const content = format === 'json' ? JSON.stringify(records,null,2) : recordsToCsv(records);
+    const blob = new Blob([content], {type:format === 'json' ? 'application/json;charset=utf-8' : 'text/csv;charset=utf-8'});
+    const url = URL.createObjectURL(blob); const link = document.createElement('a'); link.href=url; link.download=`pilot-records.${format}`; document.body.append(link); link.click(); link.remove(); window.setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
   return <main className="app-shell">
     <aside className="sidebar">
@@ -100,6 +112,8 @@ function Home() {
         </div>
         <div className="disclaimer" id="disclaimer"><ShieldAlert size={17}/><p>{DISCLAIMER}</p></div>
         <div className="warning-strip"><span className="warning-mark">!</span><b>{SYNTHETIC}</b><span>All records and traces shown are invented for interface evaluation.</span></div>
+        {recoveryNotice && <div className="storage-notice" role="status" data-testid="status-record-recovery">{recoveryNotice}</div>}
+        {storageError && <div className="storage-notice storage-error" role="alert" data-testid="status-storage-error">{storageError}</div>}
         {showCreate && <form className="create-panel panel fade-in" onSubmit={createPass}>
           <div className="form-title"><div><div className="eyebrow">NEW EXAMPLE RECORD</div><h2>Simulate a pass</h2></div><button type="button" className="icon-button" onClick={()=>setShowCreate(false)} aria-label="Close form"><X size={17}/></button></div>
           <div className="form-grid">
@@ -113,7 +127,7 @@ function Home() {
         <div className="summary-row">
           <div className="metric panel"><div className="metric-top"><span className="eyebrow">SAVED EXAMPLES</span><Archive size={16}/></div><strong>{records.length.toString().padStart(2,'0')}</strong><small>local records</small></div>
           <div className="metric panel"><div className="metric-top"><span className="eyebrow">REQUIRES REVIEW</span><span className="metric-dot amber"/></div><strong>{records.filter(r=>r.detectionState.startsWith('Requires')).length.toString().padStart(2,'0')}</strong><small>operator judgement needed</small></div>
-          <div className="metric panel"><div className="metric-top"><span className="eyebrow">STORAGE</span><span className="storage-icon"><Check size={12}/></span></div><strong className="metric-word">On this device</strong><small>autosaved to local storage</small></div>
+          <div className="metric panel"><div className="metric-top"><span className="eyebrow">STORAGE</span><span className={`storage-icon ${storageError ? 'storage-error-icon' : ''}`}>{storageError ? <ShieldAlert size={12}/> : <Check size={12}/>}</span></div><strong className="metric-word">{storageError ? 'Unavailable' : 'On this device'}</strong><small>{storageError ? 'changes may not persist' : 'autosaved to local storage'}</small></div>
         </div>
         <section className="review-layout">
           <div className="records-panel panel">
