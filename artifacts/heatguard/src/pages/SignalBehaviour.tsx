@@ -118,8 +118,12 @@ export default function SignalBehaviour() {
       <header className="signal-page-top">
         <div className="signal-crumb">HEATGUARD <span>/</span> <b>Signal behaviour</b></div>
         <nav className="signal-page-nav" aria-label="Workspace pages">
-          <Link href="/">Pass review</Link>
-          <Link href="/scenario">Scenario layout</Link>
+          <Link href="/work-packages">Overview</Link>
+          <Link href="/scenario">WP1 Scenario</Link>
+          <Link href="/signals">WP2 Signals</Link>
+          <Link href="/records">WP3 Records</Link>
+          <Link href="/video">WP4 Video</Link>
+          <Link href="/review">WP5 Review</Link>
           <span className="signal-concept-tag"><i /> CONCEPT WALKTHROUGH</span>
         </nav>
       </header>

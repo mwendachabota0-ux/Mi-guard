@@ -25,7 +25,8 @@ real dispatch or equipment command.
 |---|---|---|
 | Project board | A checklist that breaks the work into steps and leaves space to assign people. | Ready |
 | Six handover folders | Empty, labeled folders for the final video and supporting files. | Ready |
-| HEATGUARD dashboard | A truck-flow simulation with sample events, route outcomes, and example operator choices. | Ready for review |
+| HEATGUARD work-package overview | One dashboard entry point to WP1–WP5, with honest status and links to the available pages. | Available |
+| WP3 pass-review dashboard | A truck-flow simulation with sample events, route outcomes, and example operator choices. | Prototype ready |
 | Signal generator | A program that draws made-up sensor readings for four example situations. | Ready for review; labeled charts, case overlays, static and animated signal-flow visuals, sample data, and assumptions generated |
 
 The dashboard saves changes in the browser where you use it. Those changes are
@@ -33,9 +34,10 @@ not shared with other team members or saved to a central system.
 
 ## How to try the dashboard
 
-1. Open **HEATGUARD** in the project preview. Choose **Signal behaviour** to
-   inspect the WP2 flow and four illustrative cases.
-2. Choose **Simulate a pass** and select a case to add a made-up truck pass.
+1. Open **HEATGUARD** in the project preview. Choose **WP2 · Signals** to
+   inspect the signal flow and four illustrative cases.
+2. Return to **Work packages**, open **WP3 · Pass review**, then choose
+   **Simulate a pass** and select a case.
 3. Case B shows an illustrative event flag and takes the alternate route in the
    simulation. Case A continues toward the crusher; Cases C and D remain marked
    for review and are not treated as confirmed detections.

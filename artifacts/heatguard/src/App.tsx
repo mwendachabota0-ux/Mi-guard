@@ -6,6 +6,8 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import NotFound from '@/pages/not-found';
 import Scenario from '@/pages/Scenario';
 import SignalBehaviour from '@/pages/SignalBehaviour';
+import WorkPackages from '@/pages/WorkPackages';
+import { ReviewPackage, VideoPackage } from '@/pages/WorkPackageDetails';
 import {
   Activity, Archive, ArrowDownToLine, ArrowRight, ArrowUpRight, Check, ChevronDown,
   CircleHelp, ClipboardCheck, FilePlus2, Filter, GitBranch, Gauge, Search, ShieldAlert,
@@ -193,12 +195,14 @@ function Home() {
   return <main className="app-shell">
     <aside className="sidebar">
       <div className="brand"><div className="brand-mark"><Activity size={20}/></div><div><b>HEATGUARD</b><span>ORE PASS SIMULATION</span></div></div>
-      <div className="side-label">WORKSPACE</div>
-       <Link href="/" className="side-active" data-testid="link-pass-review"><span className="side-indicator"/><Activity size={16}/> Pass review <span className="side-count">{records.length}</span></Link>
-       <Link href="/scenario" className="side-link scenario-nav" data-testid="link-scenario"><RouteIcon size={16}/> Scenario layout <ArrowUpRight size={13}/></Link>
-       <Link href="/signals" className="side-link scenario-nav" data-testid="link-signal-behaviour"><Waves size={16}/> Signal behaviour <ArrowUpRight size={13}/></Link>
+      <div className="side-label">WORK PACKAGES</div>
+       <Link href="/work-packages" className="side-link scenario-nav" data-testid="link-work-packages"><ClipboardCheck size={16}/> Overview <ArrowUpRight size={13}/></Link>
+       <Link href="/scenario" className="side-link scenario-nav" data-testid="link-scenario"><RouteIcon size={16}/> WP1 · Scenario <ArrowUpRight size={13}/></Link>
+       <Link href="/signals" className="side-link scenario-nav" data-testid="link-signal-behaviour"><Waves size={16}/> WP2 · Signals <ArrowUpRight size={13}/></Link>
+       <Link href="/records" className="side-active scenario-nav" data-testid="link-pass-review"><span className="side-indicator"/><Activity size={16}/> WP3 · Records <span className="side-count">{records.length}</span></Link>
+       <Link href="/video" className="side-link scenario-nav" data-testid="link-video-package"><Archive size={16}/> WP4 · Video <ArrowUpRight size={13}/></Link>
+       <Link href="/review" className="side-link scenario-nav" data-testid="link-review-package"><ClipboardCheck size={16}/> WP5 · Review <ArrowUpRight size={13}/></Link>
       <div className="side-label">REFERENCE</div>
-      <div className="side-link"><ClipboardCheck size={16}/> Evaluation checklist</div>
       <div className="side-link"><Archive size={16}/> Pass history</div>
       <div className="sidebar-spacer"/>
       <div className="side-note"><ShieldAlert size={16}/><span>Prototype only<br/><b>No operational control path</b></span></div>
@@ -207,12 +211,15 @@ function Home() {
     <section className="main-area">
       <header className="topbar">
         <div className="crumb">HEATGUARD <span>/</span> <b>Pass review</b></div>
-          <div className="top-right"><span className="synthetic-pill"><i/> SYNTHETIC MODE</span><Link href="/scenario" className="scenario-top-link" data-testid="link-top-scenario">Scenario layout <ArrowUpRight size={14}/></Link><Link href="/signals" className="scenario-top-link" data-testid="link-top-signals">Signal behaviour <Waves size={14}/></Link><button className="icon-button" title="About this prototype" aria-label="About this prototype" onClick={()=>document.getElementById('disclaimer')?.scrollIntoView({behavior:'smooth'})} data-testid="button-about"><CircleHelp size={17}/></button></div>
+         <div className="top-right"><span className="synthetic-pill"><i/> SYNTHETIC MODE</span><Link href="/work-packages" className="scenario-top-link" data-testid="link-top-work-packages">Work packages <ArrowUpRight size={14}/></Link><button className="icon-button" title="About this prototype" aria-label="About this prototype" onClick={()=>document.getElementById('disclaimer')?.scrollIntoView({behavior:'smooth'})} data-testid="button-about"><CircleHelp size={17}/></button></div>
       </header>
       <nav className="mobile-workspace-nav" aria-label="Workspace pages">
-        <Link href="/" className="mobile-workspace-active" data-testid="link-mobile-pass-review"><Activity size={14}/>Pass review</Link>
-        <Link href="/scenario" data-testid="link-mobile-scenario"><RouteIcon size={14}/>Scenario layout</Link>
-        <Link href="/signals" data-testid="link-mobile-signals"><Waves size={14}/>Signal behaviour</Link>
+        <Link href="/work-packages" data-testid="link-mobile-work-packages"><ClipboardCheck size={14}/>Overview</Link>
+        <Link href="/scenario" data-testid="link-mobile-scenario"><RouteIcon size={14}/>WP1</Link>
+        <Link href="/signals" data-testid="link-mobile-signals"><Waves size={14}/>WP2</Link>
+        <Link href="/records" className="mobile-workspace-active" data-testid="link-mobile-pass-review"><Activity size={14}/>WP3</Link>
+        <Link href="/video" data-testid="link-mobile-video"><Archive size={14}/>WP4</Link>
+        <Link href="/review" data-testid="link-mobile-review"><ClipboardCheck size={14}/>WP5</Link>
       </nav>
       <div className="content">
         <div className="page-heading fade-in">
@@ -287,7 +294,7 @@ function Home() {
 }
 
 function Router() {
-  return <RoutedErrorBoundary><Switch><Route path="/" component={Home}/><Route path="/scenario" component={Scenario}/><Route path="/signals" component={SignalBehaviour}/><Route component={NotFound}/></Switch></RoutedErrorBoundary>;
+  return <RoutedErrorBoundary><Switch><Route path="/" component={WorkPackages}/><Route path="/work-packages" component={WorkPackages}/><Route path="/records" component={Home}/><Route path="/scenario" component={Scenario}/><Route path="/signals" component={SignalBehaviour}/><Route path="/video" component={VideoPackage}/><Route path="/review" component={ReviewPackage}/><Route component={NotFound}/></Switch></RoutedErrorBoundary>;
 }
 
 function RoutedErrorBoundary({ children }: { children: ReactNode }) {

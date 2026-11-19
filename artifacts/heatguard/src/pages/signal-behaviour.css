@@ -42,6 +42,7 @@
 .signal-page-nav {
   display: flex;
   align-items: center;
+  min-width: 0;
   gap: 16px;
 }
 
@@ -785,7 +786,8 @@
 
 @media (max-width: 650px) {
   .signal-page-top { min-height: 47px; padding: 0 14px; }
-  .signal-page-nav { gap: 9px; }
+  .signal-page-nav { gap: 9px; max-width: calc(100vw - 120px); overflow-x: auto; scrollbar-width: thin; }
+  .signal-page-nav a { flex: 0 0 auto; }
   .signal-page-nav a { font-size: 8px; }
   .signal-concept-tag { display: none; }
   .signal-content { padding: 22px 12px 18px; }

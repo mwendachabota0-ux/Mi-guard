@@ -263,8 +263,8 @@ button:focus-visible,input:focus-visible,select:focus-visible { outline:2px soli
   .svg-label { font-size:14px; }
 }
 @media(max-width:760px) {
-  .mobile-workspace-nav { display:flex; align-items:center; gap:6px; padding:7px 14px; border-bottom:1px solid #e4dfd3; background:#f5f2e9; }
-  .mobile-workspace-nav a { display:inline-flex; align-items:center; gap:6px; min-height:30px; padding:0 9px; border:1px solid transparent; border-radius:5px; color:#768077; text-decoration:none; font:9px var(--app-font-mono); }
+  .mobile-workspace-nav { display:flex; align-items:center; gap:6px; overflow-x:auto; padding:7px 14px; border-bottom:1px solid #e4dfd3; background:#f5f2e9; scrollbar-width:thin; }
+  .mobile-workspace-nav a { display:inline-flex; flex:0 0 auto; align-items:center; gap:6px; min-height:30px; padding:0 9px; border:1px solid transparent; border-radius:5px; color:#768077; text-decoration:none; font:9px var(--app-font-mono); }
   .mobile-workspace-nav a.mobile-workspace-active { border-color:#d9c89f; color:#68542f; background:#f4eddc; }
   .scenario-top-link { padding:5px 7px; font-size:9px; }
   .scenario-content { padding-top:19px; }

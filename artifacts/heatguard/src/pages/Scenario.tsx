@@ -267,17 +267,20 @@ export default function Scenario() {
   return <main className="app-shell scenario-shell">
     <aside className="sidebar">
       <div className="brand"><div className="brand-mark"><Activity size={20}/></div><div><b>HEATGUARD</b><span>ORE PASS SIMULATION</span></div></div>
-      <div className="side-label">WORKSPACE</div>
-      <Link href="/" className="side-link scenario-nav" data-testid="link-pass-review"><Activity size={16}/> Pass review <ChevronRight size={13}/></Link>
-      <Link href="/scenario" className="side-active scenario-nav" data-testid="link-scenario"><Map size={16}/> Scenario layout <span className="side-count">WP1</span></Link>
-      <Link href="/signals" className="side-link scenario-nav" data-testid="link-signal-behaviour"><Waves size={16}/> Signal behaviour <ChevronRight size={13}/></Link>
+      <div className="side-label">WORK PACKAGES</div>
+      <Link href="/work-packages" className="side-link scenario-nav" data-testid="link-work-packages"><Activity size={16}/> Overview <ChevronRight size={13}/></Link>
+      <Link href="/scenario" className="side-active scenario-nav" data-testid="link-scenario"><Map size={16}/> WP1 · Scenario <span className="side-count">1/5</span></Link>
+      <Link href="/signals" className="side-link scenario-nav" data-testid="link-signal-behaviour"><Waves size={16}/> WP2 · Signals <ChevronRight size={13}/></Link>
+      <Link href="/records" className="side-link scenario-nav" data-testid="link-pass-review"><Activity size={16}/> WP3 · Records <ChevronRight size={13}/></Link>
+      <Link href="/video" className="side-link scenario-nav" data-testid="link-video-package"><Factory size={16}/> WP4 · Video <ChevronRight size={13}/></Link>
+      <Link href="/review" className="side-link scenario-nav" data-testid="link-review-package"><ShieldAlert size={16}/> WP5 · Review <ChevronRight size={13}/></Link>
       <div className="side-label">REFERENCE</div><div className="side-link"><ShieldAlert size={16}/> Concept basis</div>
       <div className="sidebar-spacer"/><div className="side-note"><ShieldAlert size={16}/><span>Prototype only<br/><b>No operational control path</b></span></div>
       <div className="sidebar-foot"><span className="live-dot"/> LOCAL WORKSPACE <span className="mono">v0.1</span></div>
     </aside>
     <section className="main-area">
-      <header className="topbar"><div className="crumb">HEATGUARD <span>/</span> <b>Scenario &amp; system layout</b></div><div className="top-right"><span className="synthetic-pill"><i/> CONCEPT ONLY</span><Link href="/" className="scenario-top-link" data-testid="link-top-pass-review">Pass review <ArrowRight size={14}/></Link><Link href="/signals" className="scenario-top-link" data-testid="link-top-signals">Signal behaviour <Waves size={14}/></Link><button className="icon-button" title="Concept basis" aria-label="Concept basis" onClick={()=>document.getElementById('basis')?.scrollIntoView({behavior:'smooth'})} data-testid="button-scenario-about"><CircleHelp size={17}/></button></div></header>
-      <nav className="mobile-workspace-nav" aria-label="Workspace pages"><Link href="/" data-testid="link-mobile-pass-review"><Activity size={14}/>Pass review</Link><Link href="/scenario" className="mobile-workspace-active" data-testid="link-mobile-scenario"><Map size={14}/>Scenario layout</Link><Link href="/signals" data-testid="link-mobile-signals"><Waves size={14}/>Signal behaviour</Link></nav>
+      <header className="topbar"><div className="crumb">HEATGUARD <span>/</span> <b>Scenario &amp; system layout</b></div><div className="top-right"><span className="synthetic-pill"><i/> CONCEPT ONLY</span><Link href="/work-packages" className="scenario-top-link" data-testid="link-top-work-packages">Work packages <ArrowRight size={14}/></Link><button className="icon-button" title="Concept basis" aria-label="Concept basis" onClick={()=>document.getElementById('basis')?.scrollIntoView({behavior:'smooth'})} data-testid="button-scenario-about"><CircleHelp size={17}/></button></div></header>
+      <nav className="mobile-workspace-nav" aria-label="Workspace pages"><Link href="/work-packages" data-testid="link-mobile-work-packages"><Activity size={14}/>Overview</Link><Link href="/scenario" className="mobile-workspace-active" data-testid="link-mobile-scenario"><Map size={14}/>WP1</Link><Link href="/signals" data-testid="link-mobile-signals"><Waves size={14}/>WP2</Link><Link href="/records" data-testid="link-mobile-pass-review"><Activity size={14}/>WP3</Link><Link href="/video" data-testid="link-mobile-video"><Factory size={14}/>WP4</Link><Link href="/review" data-testid="link-mobile-review"><ShieldAlert size={14}/>WP5</Link></nav>
       <div className="content scenario-content">
         <div className="page-heading fade-in"><div><div className="eyebrow">WP1 · MINE CONTEXT + CONVEYOR LAYOUT <span className="heading-index">/ 02</span></div><h1>From approach road to crusher</h1><p>Follow delivery to the hopper, then trace the proposed conveyor-only sensing sequence.</p></div><div className="concept-state" data-testid="status-concept-only"><span/><b>CONCEPTUAL · NOT FOR CONSTRUCTION</b></div></div>
         <div className="scenario-caveat"><AlertTriangle size={17}/><p><b>Discussion concept only.</b> The generic site plan is not surveyed or to scale. No sensor is shown in the truck. Geometry, sensor roles, estimated material boundaries, timing, and diverter / chute require engineering review and controlled tests. This is not an operating or safety claim.</p></div>
@@ -323,7 +326,7 @@ export default function Scenario() {
           </ol><div className="sequence-note"><GitBranch size={14}/> Schematic positions and boundaries are not to scale.</div></article>
         </section>
         <section className="scenario-review-note" aria-label="Review status"><b>Next review gate</b><span>Confirm site geometry, vehicle clearances, sensor roles and count, segment-estimation method, actuator / mechanism, and operating response with engineering and site stakeholders. Validate only through controlled tests.</span></section>
-        <div className="scenario-bottom-nav"><span>Continue to pass-record examples</span><Link href="/" className="primary-button" data-testid="link-scenario-to-review">Open pass review <ArrowRight size={15}/></Link></div>
+        <div className="scenario-bottom-nav"><span>Continue to pass-record examples</span><Link href="/records" className="primary-button" data-testid="link-scenario-to-review">Open pass review <ArrowRight size={15}/></Link></div>
         <footer className="page-footer"><span>HEATGUARD <i>·</i> LOCAL CONCEPT WORKSPACE</span><span>NO OPERATIONAL CONTROL · NO PERFORMANCE CLAIMS</span></footer>
       </div>
     </section>
