@@ -4,12 +4,13 @@ import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import NotFound from '@/pages/not-found';
+import Scenario from '@/pages/Scenario';
 import {
   Activity, Archive, ArrowDownToLine, ArrowRight, ArrowUpRight, Check, ChevronDown,
   CircleHelp, ClipboardCheck, FilePlus2, Filter, GitBranch, Gauge, Search, ShieldAlert,
   Truck, X, Factory, Route as RouteIcon,
 } from 'lucide-react';
-import { Route, Switch, useLocation, Router as WouterRouter } from 'wouter';
+import { Link, Route, Switch, useLocation, Router as WouterRouter } from 'wouter';
 
 const queryClient = new QueryClient();
 
@@ -192,7 +193,8 @@ function Home() {
     <aside className="sidebar">
       <div className="brand"><div className="brand-mark"><Activity size={20}/></div><div><b>HEATGUARD</b><span>ORE PASS SIMULATION</span></div></div>
       <div className="side-label">WORKSPACE</div>
-      <div className="side-active"><span className="side-indicator"/><Activity size={16}/> Pass review <span className="side-count">{records.length}</span></div>
+       <Link href="/" className="side-active" data-testid="link-pass-review"><span className="side-indicator"/><Activity size={16}/> Pass review <span className="side-count">{records.length}</span></Link>
+       <Link href="/scenario" className="side-link scenario-nav" data-testid="link-scenario"><RouteIcon size={16}/> Scenario layout <ArrowUpRight size={13}/></Link>
       <div className="side-label">REFERENCE</div>
       <div className="side-link"><ClipboardCheck size={16}/> Evaluation checklist</div>
       <div className="side-link"><Archive size={16}/> Pass history</div>
@@ -203,8 +205,12 @@ function Home() {
     <section className="main-area">
       <header className="topbar">
         <div className="crumb">HEATGUARD <span>/</span> <b>Pass review</b></div>
-        <div className="top-right"><span className="synthetic-pill"><i/> SYNTHETIC MODE</span><button className="icon-button" title="About this prototype" aria-label="About this prototype" onClick={()=>document.getElementById('disclaimer')?.scrollIntoView({behavior:'smooth'})} data-testid="button-about"><CircleHelp size={17}/></button></div>
+         <div className="top-right"><span className="synthetic-pill"><i/> SYNTHETIC MODE</span><Link href="/scenario" className="scenario-top-link" data-testid="link-top-scenario">Scenario layout <ArrowUpRight size={14}/></Link><button className="icon-button" title="About this prototype" aria-label="About this prototype" onClick={()=>document.getElementById('disclaimer')?.scrollIntoView({behavior:'smooth'})} data-testid="button-about"><CircleHelp size={17}/></button></div>
       </header>
+      <nav className="mobile-workspace-nav" aria-label="Workspace pages">
+        <Link href="/" className="mobile-workspace-active" data-testid="link-mobile-pass-review"><Activity size={14}/>Pass review</Link>
+        <Link href="/scenario" data-testid="link-mobile-scenario"><RouteIcon size={14}/>Scenario layout</Link>
+      </nav>
       <div className="content">
         <div className="page-heading fade-in">
           <div><div className="eyebrow">PROPOSED SCANNER · BEFORE CRUSHER <span className="heading-index">/ 01</span></div><h1>Ore pass review</h1><p>Follow a conceptual truck pass, log the example, and review the route outcome.</p></div>
@@ -278,7 +284,7 @@ function Home() {
 }
 
 function Router() {
-  return <RoutedErrorBoundary><Switch><Route path="/" component={Home}/><Route component={NotFound}/></Switch></RoutedErrorBoundary>;
+  return <RoutedErrorBoundary><Switch><Route path="/" component={Home}/><Route path="/scenario" component={Scenario}/><Route component={NotFound}/></Switch></RoutedErrorBoundary>;
 }
 
 function RoutedErrorBoundary({ children }: { children: ReactNode }) {
