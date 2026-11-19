@@ -6,65 +6,48 @@
 
 ## Summary
 
-WP1 began with a request to sketch the mine approach to crusher feed, vehicle path, proposed sensor zone, and equipment locations, including an alternate Land Cruiser / dump-truck pilot view.
+WP1 combines a generic mine-site approach context with the revised conveyor-based process. The proposed sensing zone is shown on the conveyor only, after the delivery vehicle discharges into a receiving hopper. A Land Cruiser / dump-truck profile control changes only the illustrative vehicle symbol and scale; both profiles follow the same conceptual road and stop at the hopper. No sensing in the truck is implied.
 
-The first HEATGUARD scenario concept placed a proposed sensing zone on the vehicle approach and let the viewer switch between Land Cruiser and dump-truck profiles. After reviewing the supplied hand sketch, the system concept changed: sensing is now shown on the conveyor **after** ore is discharged from the truck. This avoids depicting a truck-mounted sensing arrangement that could be confounded by metal in the vehicle itself.
+The process schematic and a separate isometric-style drawing show the relative sequence through S1, S2, optional S3, a controller / timing estimate, an uncertain affected-material interval, a generic diverter and hold / reject collection, and the continuing unaffected feed path to the crusher. Both views are conceptual, relative, and not to scale.
 
-The current WP1 illustration focuses on the conveyor process. It does not yet provide a surveyed, site-wide mine-road plan or a current Land Cruiser-versus-dump-truck sensing comparison. The haul truck is shown only as the source that tips ore into the feed hopper.
+## Interpretation of the supplied audit and sketch
 
-## Interpretation of the supplied sketch
+The audit scope describes a delivery vehicle unloading ore into a hopper, conveyor movement toward a crusher, multiple downstream observations, an estimated affected interval, a separate reject route, and unaffected feed continuing toward the crusher. The attached hand sketch is treated as scope reference only. Ambiguous details, particularly the exact removal mechanism, are represented as generic placeholders rather than resolved engineering choices.
 
-The sketch appears to show a haul truck discharging ore onto a conveyor, sensing points along the moving material, and a separate path for material removed before crusher feed. Some hand-drawn details—especially the exact removal mechanism—are difficult to identify, so the current illustration uses a generic diverter and hold / reject chute as placeholders.
+## Five-stage conceptual process
 
-## Current conceptual process
+1. **Approach and discharge:** A delivery vehicle follows the illustrative mine approach road to the receiving hopper. Its path ends at the hopper. Material is discharged onto the conveyor.
+2. **S1 initial indication:** S1 represents an initial indication of possible metal in the material after discharge.
+3. **S2 confirmation:** S2 supplies a second observation. Optional S3 adds another observation point. Roles/count are not selected for an installation.
+4. **Estimate affected interval and timing:** A controller concept would use sensor observations plus real conveyor movement, distance, and response inputs to estimate an affected-material interval and its arrival window. No algorithm or values are specified; the interval boundaries are visibly uncertain.
+5. **Hold affected material; continue feed:** A generic diverter immediately before the crusher and a generic hold / reject chute illustrate a possible separation route. Unaffected material is depicted continuing to crusher feed after the interval clears.
 
-1. **Discharge:** A haul truck tips ore into a feed hopper. The proposed sensing process begins downstream, after discharge.
-2. **Initial indication:** Sensor 1 (S1) marks a possible metal item travelling with the ore.
-3. **Confirmation and tracking:** Sensor 2 (S2) provides a further observation. An optional S3 arrangement adds another confirmation / tracking point.
-4. **Estimate the affected section:** A controller concept uses sensor observations and conveyor information to estimate the affected ore section and its arrival window at the removal point.
-5. **Separate and resume:** A conceptual diverter immediately before crusher feed sends the affected section to a hold / reject chute. The normal material path to the crusher is shown continuing after that section clears.
+The interactive walkthrough and separate process summary use these same five stages. Selecting a stage updates a polite live announcement and highlights related drawing parts. Sensor arrangement and view selectors are interactive; horizontal pan remains available on narrow screens.
 
-The walkthrough is an explanation of the proposed sequence only. It does not calculate a real arrival time, define the size of a contaminated section, or operate equipment.
+## Visible assumptions and limits
 
-## Equipment and relative placement shown
+- The site plan is generic, not surveyed, and all locations are relative and not to scale.
+- The haul vehicle profile is for delivery / offloading context only. Both profiles travel only to the hopper.
+- A generic conveyor movement / speed input is a placeholder; no sensor, encoder, or other input type is selected.
+- S1 is an initial indication; S2 provides a second observation; optional S3 adds an observation.
+- The controller would estimate an affected interval and arrival window using real movement, distance, and response inputs. No estimation algorithm or numerical values are specified.
+- The affected-material boundaries are approximate and uncertain.
+- The diverter and reject / hold chute are generic placeholders, not selected mechanisms.
+- Normal feed is depicted continuing after the affected interval. No automatic crusher shutdown is shown or implied.
+- No performance or safety claims are made. No live sensor input, automated control, site measurement, or validated operation is represented.
 
-- Haul truck discharge and feed hopper at the start of the process.
-- Conveyor carrying ore toward the crusher.
-- S1 detection point, S2 confirmation point, and selectable optional S3 point.
-- Controller / timing-estimate block associated with the sensing and tracking concept.
-- A highlighted, illustrative affected-ore segment on the belt.
-- A placeholder diverter and hold / reject chute before crusher feed.
-- The normal ore path continuing to the crusher.
+## Engineering review and controlled tests required
 
-These positions communicate sequence and relative relationship only. They are not surveyed or dimensioned placements.
+Final site geometry, vehicle clearances, sensor roles and count, segment-estimation method, actuator / mechanism, and operating response need engineering and site review and controlled tests. These are unresolved decisions, not implementation recommendations or approvals. Any real installation or operating response would require the applicable site approvals and safety processes.
 
-## Interactive material
+## Current implementation
 
-The WP1 page at `/scenario` contains:
+The `/scenario` page contains:
 
-- A process schematic and an isometric-style illustration of the same conveyor flow.
-- A selector for two- and three-sensor arrangements.
-- A five-step walkthrough that updates the explanation and highlights the related parts of the illustration.
-- Mobile horizontal scrolling for the full-width drawing.
-- Labels stating that the concept is not to scale and is not for construction.
+- A mine approach and conveyor process schematic plus a distinct isometric-style conceptual illustration.
+- An interactive vehicle-profile selector, clearly restricted to the illustrative delivery symbol and scale.
+- Two- and three-sensor selectors, a five-stage highlight walkthrough, and an aligned five-step process summary.
+- A labeled proposed sensor zone on the conveyor after discharge; vehicle travel path; material path; fixed equipment; uncertain interval; reject route; and continuing crusher feed.
+- A generic movement / speed input placeholder, controller / timing estimate, and visible mobile horizontal-pan affordance.
 
-## Original vehicle-pilot scope and current status
-
-The Land Cruiser / dump-truck selector belonged to the earlier vehicle-path concept. It was removed from the current WP1 sensing illustration because the selected approach places sensing on the conveyor, not on either vehicle. A truck remains in the drawing only to explain how ore enters the process.
-
-The current WP1 page therefore does **not** show the full mine approach road, alternate vehicle lanes, or a Land Cruiser pilot route. If those are still required for the deliverable, they should be added as a separate site-context view that leads to the conveyor feed and makes clear that sensing occurs after discharge.
-
-## Assumptions and limits
-
-- The schematic, sensor count, sensor roles, affected-section boundaries, timing, and diverter arrangement are conceptual.
-- No sensor technology, range, accuracy, threshold, performance value, or timing value is specified.
-- A real arrival estimate would require validated conveyor speed, measured distances, material-flow behaviour, and equipment response information.
-- The physical separation mechanism and reject destination have not been selected.
-- No live sensor input, automated control, safety certification, site measurement, or physical test is represented.
-- Engineering review, controlled testing, supervisor direction, and site / Barrick HSE approval are required before any real installation or operating response is considered.
-
-## Recommended remaining WP1 work
-
-1. Confirm whether the mine approach road and vehicle path should be added around the revised conveyor concept.
-2. Confirm the intended roles for the two- and three-sensor arrangements and the proposed hold / reject destination with the project team.
-3. Export the reviewed, labeled layout views for the technical-asset handoff after the concept is approved.
+This report and the page document the concept only. They do not specify design dimensions, sensing performance, operating parameters, or an approved installation.

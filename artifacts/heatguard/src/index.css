@@ -297,6 +297,42 @@ button:focus-visible,input:focus-visible,select:focus-visible { outline:2px soli
   .svg-label { font-size:15px; }
 }
 
+/* WP1 completion: surveyed-context disclaimer, distinct drawings, and accessible controls */
+.scenario-control-row { display:flex; align-items:center; justify-content:flex-end; gap:8px; flex-wrap:wrap; }
+.vehicle-select { align-self:flex-end; }
+.vehicle-select button { min-width:105px; }
+.drawing-frame { overflow-x:auto; overscroll-behavior-x:contain; scrollbar-color:#b8ad91 #ede9dd; }
+.site-svg { min-width:900px; }
+.isometric-drawing { background:#f1eee4; }
+.drawing-overline { fill:#9a895f; font:9px var(--app-font-mono); letter-spacing:.08em; }
+.diagram-part { transition:opacity .2s ease; }
+.diagram-part.part-active { filter:drop-shadow(0 0 3px #d7a344); }
+.drawing-frame:has(.part-active) .diagram-part:not(.part-active) { opacity:.68; }
+.sensor-zone { pointer-events:none; }
+.vehicle-symbol { transform-box:fill-box; }
+.legend-row .legend-material { border-top:3px solid #587765; background:repeating-linear-gradient(135deg,transparent 0 5px,#d3d9ce 5px 7px); }
+.legend-row .legend-road { border-top:2px dashed #718878; }
+.scenario-review-note { display:flex; gap:12px; align-items:flex-start; margin-top:13px; padding:12px 14px; border-left:3px solid #718778; border-radius:5px; color:#627169; background:#e9ede4; font-size:10px; line-height:1.5; }
+.scenario-review-note b { flex:0 0 auto; color:#435a4d; font:10px var(--app-font-mono); letter-spacing:.03em; text-transform:uppercase; }
+.sequence-list li { min-height:48px; }
+.step-track button { transition:background .16s,border-color .16s,color .16s; }
+.step-track button:hover { border-color:#c9b783; color:#5b624f; background:#f5f0e2; }
+.scenario-shell a:focus-visible,.scenario-shell button:focus-visible,.drawing-frame:focus-visible { outline:2px solid #bd852d; outline-offset:3px; }
+@media(max-width:900px) {
+  .scenario-control-row { justify-content:flex-start; }
+  .vehicle-select { align-self:flex-start; }
+}
+@media(max-width:760px) {
+  .scenario-control-row { align-items:flex-start; flex-direction:column; }
+  .vehicle-select { width:100%; }
+  .vehicle-select button { flex:1; }
+  .site-svg { min-width:900px; }
+  .drawing-caption { min-width:900px; }
+  .scenario-review-note { flex-direction:column; gap:5px; }
+  .step-track { grid-template-columns:1fr; }
+  .step-track button { min-height:40px; align-items:center; }
+}
+
 /* WP1 conveyor system study */
 .scenario-content .page-heading h1 { color:#2d413d; }
 .diagram-meta { display:flex; align-items:center; gap:10px; margin:0 0 10px; padding:8px 10px; border:1px solid #e7e1d4; border-radius:5px; background:#faf8f1; }
