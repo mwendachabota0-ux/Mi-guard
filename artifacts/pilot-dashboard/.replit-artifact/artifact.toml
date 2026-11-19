@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/pilot-dashboard/"
+title = "Pilot Records Dashboard"
+description = "An interactive, illustrative dashboard for reviewing synthetic metal-detection pilot events, operator actions, and evaluation evidence."
+version = "1.0.0"
+id = "artifacts/pilot-dashboard"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/pilot-dashboard/" ]
+localPort = 25875
+
+[services.development]
+run = "pnpm --filter @workspace/pilot-dashboard run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/pilot-dashboard", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/pilot-dashboard/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25875"
+BASE_PATH = "/pilot-dashboard/"
