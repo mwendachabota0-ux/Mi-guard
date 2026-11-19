@@ -26,7 +26,7 @@ real dispatch or equipment command.
 | Project board | A checklist that breaks the work into steps and leaves space to assign people. | Ready |
 | Six handover folders | Empty, labeled folders for the final video and supporting files. | Ready |
 | HEATGUARD dashboard | A truck-flow simulation with sample events, route outcomes, and example operator choices. | Ready for review |
-| Signal generator | A program that draws made-up sensor readings for four example situations. | Ready; sample chart and data file generated |
+| Signal generator | A program that draws made-up sensor readings for four example situations. | Ready for review; labeled chart, case overlays, signal-flow visual, and sample data generated |
 
 The dashboard saves changes in the browser where you use it. Those changes are
 not shared with other team members or saved to a central system.
@@ -77,7 +77,7 @@ safety and approval requirements.
 Make a simple picture of the proposed area: where a truck might pass, where
 example sensors could sit, and how the process moves toward the crusher.
 
-### 3. Make example readings — WP2, starter ready
+### 3. Make example readings — WP2, ready for review
 
 Create made-up signal charts for Cases A–D. These help explain the idea; they
 cannot establish whether a real system detects metal.
