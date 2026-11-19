@@ -85,7 +85,7 @@ function ProcessDrawing({ sensors, profile, step }: { sensors: SensorCount; prof
       <g fill="#b6a078" stroke="#8e7954" strokeWidth="1">{[[355,329],[382,336],[416,328],[450,337],[489,328],[529,336],[570,328],[610,337],[651,328],[692,336],[735,328],[777,337],[817,328],[858,336],[900,328],[945,336]].map(([x,y],i)=><path key={i} d={`M${x} ${y}l8 -5 9 3 3 6 -8 4 -10 -2z`}/>)}</g>
       <text x="578" y="405" textAnchor="middle" className="svg-label">CONVEYOR / MATERIAL PATH →</text>
       <text x="578" y="421" textAnchor="middle" className="svg-sub">sensing begins only after discharge</text>
-      <g className="diagram-part movement-input" data-part="movement">
+      <g className={`diagram-part movement-input${active(3)}`} data-part="movement">
         <rect x="614" y="454" width="212" height="44" rx="5" fill="#e6e9df" stroke="#829286" strokeWidth="1.5"/>
         <path d="M629 468h32m-32 8h54m-54 8h39" stroke="#94a094" strokeWidth="2"/>
         <text x="699" y="472" className="svg-label">MOVEMENT / SPEED INPUT</text>
@@ -126,7 +126,7 @@ function ProcessDrawing({ sensors, profile, step }: { sensors: SensorCount; prof
       <text x="884" y="222" textAnchor="middle" className="svg-tiny">AFFECTED MATERIAL + ARRIVAL WINDOW</text>
       <text x="884" y="239" textAnchor="middle" className="svg-tiny">ESTIMATE ONLY · INPUTS NOT SPECIFIED</text>
     </g>
-    <g className={`diagram-part${active(3)}`} data-part="segment">
+    <g className={`diagram-part${active(3)}${active(4)}`} data-part="segment">
       <path d="M811 329h89l15 27h-90z" fill="url(#wp1-ore-hatch)" stroke="#b88332" strokeWidth="2" strokeDasharray="6 4"/>
       <path d="M810 316v-12m106 31v-12" stroke="#b88332" strokeWidth="2" strokeDasharray="3 3"/>
       <text x="862" y="289" textAnchor="middle" className="svg-label">AFFECTED INTERVAL</text>
@@ -220,7 +220,7 @@ function IsometricDrawing({ sensors, profile, step }: { sensors: SensorCount; pr
       <text x="648" y="28" textAnchor="middle" className="svg-label">CONTROLLER / TIMING ESTIMATE</text>
       <text x="648" y="174" textAnchor="middle" className="svg-tiny">generic movement / speed input placeholder</text>
     </g>
-    <g className={`diagram-part${active(3)}`} data-part="segment">
+    <g className={`diagram-part${active(3)}${active(4)}`} data-part="segment">
       <path d="M781 205l68-17 34 19-68 18z" fill="url(#wp1-ore-hatch)" stroke="#b88332" strokeWidth="2" strokeDasharray="6 4"/>
       <path d="M781 198l-3-18m105 14l5-18" stroke="#b88332" strokeWidth="2" strokeDasharray="3 3"/>
       <text x="835" y="166" textAnchor="middle" className="svg-label">APPROX. AFFECTED INTERVAL</text>
@@ -244,7 +244,7 @@ function IsometricDrawing({ sensors, profile, step }: { sensors: SensorCount; pr
       <text x="1074" y="119" textAnchor="middle" className="svg-label">CRUSHER</text>
       <text x="1075" y="324" textAnchor="middle" className="svg-sub">unaffected feed continues</text>
     </g>
-    <g className="diagram-part movement-input" data-part="movement">
+    <g className={`diagram-part movement-input${active(3)}`} data-part="movement">
       <rect x="485" y="466" width="261" height="42" rx="4" fill="#e6e9df" stroke="#829286"/>
       <text x="615" y="483" textAnchor="middle" className="svg-label">MOVEMENT / SPEED · INPUT PLACEHOLDER</text>
       <text x="615" y="498" textAnchor="middle" className="svg-tiny">NO DEVICE TYPE OR VALUE SELECTED</text>
@@ -317,8 +317,8 @@ export default function Scenario() {
             <li><span>01</span><div><b>Approach &amp; discharge</b><small>Delivery vehicle follows the road to hopper; path ends there.</small></div><Truck size={15}/></li>
             <li><span>02</span><div><b>S1 initial indication</b><small>First possible-item indication after material reaches the conveyor.</small></div><Radio size={15}/></li>
             <li><span>03</span><div><b>S2 confirmation</b><small>S2 adds an observation; optional S3 adds another.</small></div><Waves size={15}/></li>
-            <li><span>04</span><div><b>Estimate affected interval</b><small>Controller concept uses real movement, distance, and response inputs; window remains uncertain.</small></div><Activity size={15}/></li>
-            <li><span>05</span><div><b>Hold interval; continue feed</b><small>Generic reject route before crusher; unaffected feed continues afterward.</small></div><Factory size={15}/></li>
+             <li><span>04</span><div><b>Estimate interval &amp; timing</b><small>Movement, distance, and response inputs inform an uncertain interval and arrival window.</small></div><Activity size={15}/></li>
+             <li><span>05</span><div><b>Hold affected material; continue feed</b><small>Generic reject route before crusher; unaffected feed continues afterward.</small></div><Factory size={15}/></li>
           </ol><div className="sequence-note"><GitBranch size={14}/> Schematic positions and boundaries are not to scale.</div></article>
         </section>
         <section className="scenario-review-note" aria-label="Review status"><b>Next review gate</b><span>Confirm site geometry, vehicle clearances, sensor roles and count, segment-estimation method, actuator / mechanism, and operating response with engineering and site stakeholders. Validate only through controlled tests.</span></section>
